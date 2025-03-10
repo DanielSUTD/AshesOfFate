@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.11.2" name="cave_0" tilewidth="16" tileheight="16" tilecount="96" columns="12">
- <image source="../../Cave/cave_0.png" width="192" height="128"/>
+ <image source="../Caves/Cave/caverna-fogo.png" width="192" height="128"/>
 </tileset>
