@@ -1,3 +1,4 @@
+
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext("2d");
 
@@ -5,8 +6,35 @@ const c = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 576;
 
-c.fillStyle = 'white'
-c.fillRect(0, 0, canvas.width, canvas.height);
+//Looping FOR
+const collisionMap = []
+for(let i = 0; i < collision.length; i += 160){
+    collisionMap.push(collision.slice(i, 160 + i))
+}
+
+class Boundary{
+    constructor({position}){
+        this.position = position
+        this.width = 64
+        this.height = 64
+    }
+
+    draw(){
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const boundaries = []
+
+collisionsMap.forEach(row => {
+    row.forEach(symbol => {
+        console.log(symbol)
+    })
+})
+
+// c.fillStyle = 'white'
+// c.fillRect(0, 0, canvas.width, canvas.height);
 
 const image = new Image()
 image.src = '/img/mapa-inicio.png'
