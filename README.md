@@ -37,5 +37,6 @@ Para jogar **Ashes of Fate** localmente:
 3. Abra o arquivo `index.html` em seu navegador.
 
 
-**Ashes of Fate** - Você está pronto para enfrentá-lo?
+##
+Você está pronto para enfrentá-lo?
 
