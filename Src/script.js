@@ -81,13 +81,17 @@ idleRight.src = "/assets/MainCharacter/Idle/IdleRight.png";
 const foregroundImage = new Image()
 foregroundImage.src = ''
 
+// a Imagem é 160 x 48, logo 160 = width, 48 = height
+const SPRITE_WIDTH = 160
+const SPRITE_HEIGHT = 48
+//Quantidade de sprites na imagem
+const NUM_SPRITE = 4
 
 //Criando o jogador
 const player = new Sprite({
     position: {
-        // a Imagem é 160 x 48, logo 160 = width, 48 = height
-        x: canvas.width / 2 - 160 / 4 / 2,
-        y: canvas.height / 2 - 48 / 2
+        x: canvas.width / 2 - SPRITE_WIDTH / NUM_SPRITE / 2,
+        y: canvas.height / 2 - SPRITE_HEIGHT / 2
     },
     image: idleUp,
     frames: {
