@@ -1,46 +1,33 @@
+//Obtém o elemento <canvas> do HTML e define seu contexto 2D
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext("2d");
 
 
-// Ajusta o tamanho do Canvas(Provavelmente será mudada no futuro essas medidas)
+// Largura e Altura da Tela
 canvas.width = 1024;
 canvas.height = 576;
 
 //Armazena os arrays com as coordenadas de colisão do mapa
 const collisionsMap = []
+
 //Construção de colisões
 for(let i = 0; i < collisions.length; i += 70){
     collisionsMap.push(collisions.slice(i, 70 + i))
 }
 
-//Verificando o collisionsMap
-console.log("CollisionsMap:", collisionsMap);
+//console.log("CollisionsMap:", collisionsMap);
 
-class Boundary{
-    static width = 32
-    static height = 32
-    constructor({position}){
-        this.position = position
-        this.width = 32  //Como eu exportei o meu mapa de 16 pixels com uma visão 200% maior, multiplico 16 * 2
-        this.height = 32
-    }
 
-    draw(){
-        //Desenha as colisões
-        c.fillStyle = 'rgba(255, 0, 0, 0)' 
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
-//Armazena os limites que serão usados
+//Armazena os objetos que representam os limites de colisão.
 const boundaries = []
 
+//Define a posição inicial do mapa para centralizar no canvas
 const offset = {
-    x: -580,
+    x: -570,
     y: -600
 }
 
-//Responsável por capturar as colisões corretamente
+//Responsável por criar os objetos de colisão do jogo
 // J = COLUNA, I = LINHA
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -59,38 +46,41 @@ collisionsMap.forEach((row, i) => {
 // c.fillStyle = 'white'
 // c.fillRect(0, 0, canvas.width, canvas.height);
 
+//Mapa do Jogo
 const image = new Image()
 image.src = '/assets/Island/ilha-inicio.png'
 
-const playerImage = new Image()
-playerImage.src = '/assets/MainCharacter/Idle/IdleDown.png'
+//Sprite do personagem em movimentação
+const playerDown = new Image()
+playerDown.src = '/assets/MainCharacter/Walk/WalkDown.png'
 
-class Sprite{
-    constructor({position, velocity, image, frames = {max: 1}}){
-        this.position = position
-        this.image = image
-        this.frames = frames
+const playerUp = new Image()
+playerUp.src = '/assets/MainCharacter/Walk/WalkUp.png'
 
-        this.image.onload = () => {
-            this.width = this.image.width / this.frames.max
-            this.height = this.image.height
-        }
-    }
+const playerLeft = new Image()
+playerLeft.src = '/assets/MainCharacter/Walk/WalkLeft.png'
 
-    draw(){
-        c.drawImage(
-            this.image,
-            0,
-            0,
-            this.image.width / this.frames.max,
-            this.image.height,
-            this.position.x,
-            this.position.y,
-            this.image.width / this.frames.max,
-            this.image.height
-        )
-    }
-}
+const playerRight = new Image()
+playerRight.src = '/assets/MainCharacter/Walk/WalkRight.png'
+
+//Sprite do personagem parado
+const idleDown = new Image();
+idleDown.src = "/assets/MainCharacter/Idle/IdleDown.png";
+
+const idleUp = new Image();
+idleUp.src = "/assets/MainCharacter/Idle/IdleUp.png";
+
+const idleLeft = new Image();
+idleLeft.src = "/assets/MainCharacter/Idle/IdleLeft.png";
+
+const idleRight = new Image();
+idleRight.src = "/assets/MainCharacter/Idle/IdleRight.png";
+
+
+//Carrega a imagem que tem os objetos foreground, lembrando que o caminho deles é /assets/Foreground/nome-arquivo.png
+const foregroundImage = new Image()
+foregroundImage.src = ''
+
 
 //Criando o jogador
 const player = new Sprite({
@@ -99,12 +89,24 @@ const player = new Sprite({
         x: canvas.width / 2 - 160 / 4 / 2,
         y: canvas.height / 2 - 48 / 2
     },
-    image: playerImage,
+    image: idleUp,
     frames: {
         max: 4
+    },
+
+    sprites: {
+        down: playerDown,
+        up: playerUp,
+        left: playerLeft,
+        right: playerRight,
+        idleDown: idleDown,
+        idleUp: idleUp,
+        idleLeft: idleLeft,
+        idleRight: idleRight
     }
 })
 
+//Criando o mapa
 const background = new Sprite({
     position : {
         x: offset.x,
@@ -114,6 +116,17 @@ const background = new Sprite({
     image: image
 })
 
+// Objetos que o jogador passa por trás no mapa
+const foreground = new Sprite({
+    position : {
+        x: offset.x,
+        y: offset.y
+    },
+
+    image: foregroundImage
+})
+
+//Teclas do jogo
 const keys = {
     w: {
         pressed: false
@@ -130,11 +143,12 @@ const keys = {
 }
 
 //Todos os itens que quero poder mover em meu mapa
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries, foreground]
 
-//Retorna verdadeiro ou falso com base na condição
-//Retângulo 1 = representa o jogador
-//Retângulo 2 = representa os limites do mapa
+
+//Retângulo 1 = Representa o jogador
+//Retângulo 2 = Representa os limites do mapa
+//Verifica se dois retângulos (jogador e um obstáculo) estão colidindo.
 function rectangularCollision({ rectangle1, rectangle2 }){
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
@@ -144,6 +158,11 @@ function rectangularCollision({ rectangle1, rectangle2 }){
     )
 }
 
+// O lastKey possibilita várias teclas pressionadas ao mesmo tempo
+//Responsável por capturar a última tecla digitado pelo jogador
+let lastKey = ''
+
+//Responsável por 
 function animate(){
     window.requestAnimationFrame(animate)
     background.draw()
@@ -151,13 +170,22 @@ function animate(){
     boundaries.forEach((boundary) => {
          boundary.draw()
     })    
+
+    //Desenhando o jogador no mapa
     player.draw()
+    //Desenhando os objetos foreground
+    foreground.draw()
 
 
 
     let moving = true
+    player.moving = false
     // Teclas
     if(keys.w.pressed && lastKey === 'w'){
+        //Sprite de animação do player
+        player.moving = true
+        player.image = player.sprites.up
+
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for(let i = 0; i < boundaries.length; i++){
             const boundary = boundaries[i]
@@ -182,6 +210,9 @@ function animate(){
         })
     } 
     else if (keys.a.pressed && lastKey === 'a'){
+        //Sprite de animação do player
+        player.moving = true
+        player.image = player.sprites.left
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for(let i = 0; i < boundaries.length; i++){
             const boundary = boundaries[i]
@@ -201,12 +232,14 @@ function animate(){
         }
 
         if(moving)
-
         movables.forEach((movable) => {
             movable.position.x += 3
         }) 
     }
     else if (keys.s.pressed && lastKey === 's'){
+        //Sprite de animação do player
+        player.moving = true
+        player.image = player.sprites.down
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for(let i = 0; i < boundaries.length; i++){
             const boundary = boundaries[i]
@@ -231,6 +264,8 @@ function animate(){
         })
     }
     else if (keys.d.pressed && lastKey === 'd'){
+        player.moving = true
+        player.image = player.sprites.right
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for(let i = 0; i < boundaries.length; i++){
             const boundary = boundaries[i]
@@ -253,48 +288,28 @@ function animate(){
         movables.forEach((movable) => {
             movable.position.x -= 3
         })
-    } 
+    }
+
+    // Trocar para animação de idle se o personagem não estiver se movendo
+    if (!player.moving) {
+        switch (lastKey) {
+            case 'w':
+                player.image = player.sprites.idleUp;
+                break;
+            case 'a':
+                player.image = player.sprites.idleLeft;
+                break;
+            case 's':
+                player.image = player.sprites.idleDown;
+                break;
+            case 'd':
+                player.image = player.sprites.idleRight;
+                break;
+        }
+    }
+
 }
 
-// O lastKey possibilita várias teclas pressionadas ao mesmo tempo
 
+//Chama a função de animação
 animate()
-
-let lastKey = ''
-window.addEventListener('keydown', (e) => {
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = true
-            lastKey = 'w'
-            break
-        case 'a':
-            keys.a.pressed = true
-            lastKey = 'a'
-            break
-        case 's':
-            keys.s.pressed = true
-            lastKey = 's'
-            break
-        case 'd':
-            keys.d.pressed = true
-            lastKey = 'd'
-            break
-    }
-})
-
-window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'w':
-            keys.w.pressed = false
-            break
-        case 'a':
-            keys.a.pressed = false
-            break
-        case 's':
-            keys.s.pressed = false
-            break
-        case 'd':
-            keys.d.pressed = false
-            break
-    }
-})
