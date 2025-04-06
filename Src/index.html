@@ -11,7 +11,7 @@
 <body>
 
 
-    <!-- Tela inicial com logo como imagem -->
+    <!-- Menu do Jogo -->
     <div id="introScreen">
         <img src="/img/Logo.png" alt="Ashes of Fate" class="logo-image">
         <button id="initButton" onclick="showStory()">
@@ -19,20 +19,19 @@
         </button>
     </div>
 
-    <!-- Tela de história com botão centralizado -->
+    <!-- Tela de história do Jogo -->
     <div id="storyScreen">
         <div class="story-container">
+            <!-- Conta a história do jogo -->
             <p id="storyText"></p>
             <div class="button-container">
-                <img id="startButton" src="/img/BotaoStart.png" alt="START" onclick="startGame()"
-                    class="pure-image-button">
+                <img id="startButton" src="/img/BotaoStart.png" alt="START" onclick="startGame()">
             </div>
         </div>
     </div>
 
     <!-- Canvas API = https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API -->
-    <canvas id="game-canvas">
-    </canvas>
+    <canvas id="game-canvas"></canvas>
 
     <script src="/classes/Sprite.js"></script>
     <script src="/classes/CollisionBlock.js"></script>
