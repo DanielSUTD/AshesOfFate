@@ -1,9 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 body {
     margin: 0;
     overflow: hidden;
-    background-color: rgb(0, 0, 0);
+    background: black;
+    color: white;
+    font-family: "Jersey 15", sans-serif;
+    text-align: center;
 }
 
-canvas {
+/* Tela inicial */
+#introScreen {
+    background-image: url(/img/MapaFundo.png);
+    background-size: cover;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.logo-image {
+    max-width: 80%;
+    height: auto;
+    max-height: 60vh;
+}
+
+/* Botão INICIAR com ícone */
+#initButton {
+    padding: 0.8rem 2rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+/* Tela de história */
+#storyScreen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.story-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#storyText {
+    white-space: pre-line;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+/* Botão START*/
+#startButton {
+    cursor: pointer;
+    width: 120px; 
+    height: auto;
+    padding: 0;
+    margin: 20px auto 0; 
     display: block;
+    transition: none; 
+}
+
+/* Container do botão (opcional para alinhamento) */
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem; /* Espaço acima do botão */
+}
+
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Ícones dos botões */
+.button-icon {
+    height: 1.5em;
+    width: auto;
+    transition: all 0.3s ease;
+}
+
+/* Canvas do jogo */
+#game-canvas {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
 }

@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashes Of Fate</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+
+    <!-- Tela inicial com logo como imagem -->
+    <div id="introScreen">
+        <img src="/img/Logo.png" alt="Ashes of Fate" class="logo-image">
+        <button id="initButton" onclick="showStory()">
+            <img src="/img/BotaoInicio.png" alt="Ícone" class="button-icon"> INICIAR
+        </button>
+    </div>
+
+    <!-- Tela de história com botão centralizado -->
+    <div id="storyScreen">
+        <div class="story-container">
+            <p id="storyText"></p>
+            <div class="button-container">
+                <img id="startButton" src="/img/BotaoStart.png" alt="START" onclick="startGame()"
+                    class="pure-image-button">
+            </div>
+        </div>
+    </div>
+
     <!-- Canvas API = https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API -->
-    <canvas>
+    <canvas id="game-canvas">
     </canvas>
 
     <script src="/classes/Sprite.js"></script>
@@ -17,4 +40,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
