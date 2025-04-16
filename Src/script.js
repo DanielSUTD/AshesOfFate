@@ -11,8 +11,9 @@ canvas.height = 576;
 const collisionsMap = []
 
 //Construção de colisões
-for(let i = 0; i < collisions.length; i += 70){
-    collisionsMap.push(collisions.slice(i, 70 + i))
+//OBS: O 160 é a largura do Mapa
+for(let i = 0; i < collisions.length; i += 160){
+    collisionsMap.push(collisions.slice(i, 160 + i))
 }
 
 //console.log("CollisionsMap:", collisionsMap);
@@ -23,8 +24,8 @@ const boundaries = []
 
 //Define a posição inicial do mapa para centralizar no canvas
 const offset = {
-    x: -570,
-    y: -600
+    x: -4450,
+    y: -1550
 }
 
 //Responsável por criar os objetos de colisão do jogo
@@ -48,7 +49,7 @@ collisionsMap.forEach((row, i) => {
 
 //Mapa do Jogo
 const image = new Image()
-image.src = '/assets/Island/ilha-inicio.png'
+image.src = '/assets/Island/AshesOfFate.png'
 
 //Sprite do personagem em movimentação
 const playerDown = new Image()
@@ -311,7 +312,6 @@ function animate(){
                 break;
         }
     }
-
 }
 
 
