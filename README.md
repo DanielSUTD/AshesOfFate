@@ -1,7 +1,7 @@
 # Ashes of Fate
 
 ## Sobre o Projeto
-**Ashes of Fate** é um jogo **RPG top-down** desenvolvido em **JavaScript, HTML e CSS**, inspirado em clássicos do gênero como *The Legend of Zelda*. A história se desenrola em um mundo de **fantasia sombria e trágica**, onde o protagonista, **Gael Thorne**, busca os lendários **Três Artefatos de Terra Desconhecida** para ressuscitar sua esposa, perdida para uma doença misteriosa.
+**Ashes of Fate** é um jogo **RPG top-down** desenvolvido em **JavaScript, HTML e CSS**, inspirado em clássicos do gênero como *The Legend of Zelda*. A história se desenrola em um mundo de **fantasia sombria e trágica**, onde o protagonista, **Zarien Thorne**, busca os lendários **Três Artefatos de Terra Desconhecida** para ressuscitar sua esposa, perdida para uma doença misteriosa.
 
 ## Tecnologias Utilizadas
 - **JavaScript** - Manipula a lógica do jogo, animações e interações
@@ -17,7 +17,7 @@
 
 
 ## Como Jogar
-1. **Movimentação**: Use as teclas **WASD** para deslocar Gael pelo mapa.
+1. **Movimentação**: Use as teclas **WASD** para deslocar Zarien pelo mapa.
 2. **Interagir**: Aproxime-se de objetos e NPCs para ativar interações.
 3. **Resolver Puzzles**: Encontre soluções para enigmas que bloqueiam seu progresso.
 4. **Colete os Artefatos**: Percorra as ilhas e descubra os Três Artefatos de Terra Desconhecida.
