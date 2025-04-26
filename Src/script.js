@@ -32,7 +32,7 @@ const offset = {
 // J = COLUNA, I = LINHA
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-      if (symbol === 5538)
+      if (symbol === 21463)
         boundaries.push(
           new Boundary({
             position: {
@@ -80,7 +80,7 @@ idleRight.src = "/assets/MainCharacter/Idle/IdleRight.png";
 
 //Carrega a imagem que tem os objetos foreground, lembrando que o caminho deles é /assets/Foreground/nome-arquivo.png
 const foregroundImage = new Image()
-foregroundImage.src = ''
+foregroundImage.src = '/assets/Island/Foreground.png'
 
 // a Imagem é 160 x 48, logo 160 = width, 48 = height
 const SPRITE_WIDTH = 160
