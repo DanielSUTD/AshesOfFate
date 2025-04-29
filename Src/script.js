@@ -7,22 +7,21 @@ const c = canvas.getContext("2d");
 canvas.width = 1024;
 canvas.height = 576;
 
-//Armazena os arrays com as coordenadas de colisão do mapa
+//Armazena os arrays com as Coordenadas de Colisão do Mapa
 const collisionsMap = []
 
-//Construção de colisões
+//Construção de Colisões
 //OBS: O 160 é a largura do Mapa
 for(let i = 0; i < collisions.length; i += 160){
     collisionsMap.push(collisions.slice(i, 160 + i))
 }
-
 //console.log("CollisionsMap:", collisionsMap);
 
 
 //Armazena os objetos que representam os limites de colisão.
 const boundaries = []
 
-//Define a posição inicial do mapa para centralizar no canvas
+//Define a posição inicial do Mapa para centralizar no canvas
 const offset = {
     x: -4450,
     y: -1550
@@ -42,10 +41,7 @@ collisionsMap.forEach((row, i) => {
           })
         )
     })
-  })
-
-// c.fillStyle = 'white'
-// c.fillRect(0, 0, canvas.width, canvas.height);
+})
 
 //Mapa do Jogo
 const image = new Image()
@@ -78,11 +74,11 @@ const idleRight = new Image();
 idleRight.src = "/assets/MainCharacter/Idle/IdleRight.png";
 
 
-//Carrega a imagem que tem os objetos foreground, lembrando que o caminho deles é /assets/Foreground/nome-arquivo.png
+//Carrega a imagem que tem os objetos Foreground
 const foregroundImage = new Image()
 foregroundImage.src = '/assets/Island/Foreground.png'
 
-// a Imagem é 160 x 48, logo 160 = width, 48 = height
+// a Imagem é 320 x 96, logo 320 = width, 96 = height
 const SPRITE_WIDTH = 320
 const SPRITE_HEIGHT = 96
 //Quantidade de sprites na imagem
@@ -111,7 +107,7 @@ const player = new Sprite({
     }
 })
 
-//Criando o mapa
+//Criando o Mapa
 const background = new Sprite({
     position : {
         x: offset.x,
