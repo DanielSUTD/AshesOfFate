@@ -83,8 +83,8 @@ const foregroundImage = new Image()
 foregroundImage.src = '/assets/Island/Foreground.png'
 
 // a Imagem é 160 x 48, logo 160 = width, 48 = height
-const SPRITE_WIDTH = 160
-const SPRITE_HEIGHT = 48
+const SPRITE_WIDTH = 320
+const SPRITE_HEIGHT = 96
 //Quantidade de sprites na imagem
 const NUM_SPRITE = 4
 
@@ -170,6 +170,7 @@ let lastKey = ''
 //Responsável por 
 function animate(){
     window.requestAnimationFrame(animate)
+
     background.draw()
     //Desenhando as colisões do mapa
     boundaries.forEach((boundary) => {
