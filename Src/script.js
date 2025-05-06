@@ -12,11 +12,22 @@ const collisionsMap = []
 
 //Construção de Colisões
 //OBS: O 160 é a largura do Mapa
-for(let i = 0; i < collisions.length; i += 160){
+for (let i = 0; i < collisions.length; i += 160) {
     collisionsMap.push(collisions.slice(i, 160 + i))
 }
 //console.log("CollisionsMap:", collisionsMap);
 
+
+//Armazena os arrays com as Colisões de Batalha do Mapa
+const battleZonesMap = []
+
+//Construção de Colisões de Batalha
+//OBS: O 160 é a largura do Mapa
+for (let i = 0; i < battleZonesData.length; i += 160) {
+    battleZonesMap.push(battleZonesData.slice(i, 160 + i))
+}
+
+console.log("battleZonesMap:", battleZonesMap);
 
 //Armazena os objetos que representam os limites de colisão.
 const boundaries = []
@@ -31,17 +42,37 @@ const offset = {
 // J = COLUNA, I = LINHA
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-      if (symbol === 21463)
-        boundaries.push(
-          new Boundary({
-            position: {
-              x: j * Boundary.width + offset.x,
-              y: i * Boundary.height + offset.y
-            }
-          })
-        )
+        if (symbol === 21463)
+            boundaries.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            )
     })
 })
+
+const battleZones = []
+
+//Responsável por criar os objetos de colisão de batalha do jogo
+// J = COLUNA, I = LINHA
+battleZonesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 21464)
+            battleZones.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            )
+    })
+})
+
+console.log(battleZones);
 
 //Mapa do Jogo
 const image = new Image()
@@ -109,7 +140,7 @@ const player = new Sprite({
 
 //Criando o Mapa
 const background = new Sprite({
-    position : {
+    position: {
         x: offset.x,
         y: offset.y
     },
@@ -119,7 +150,7 @@ const background = new Sprite({
 
 // Objetos que o jogador passa por trás no mapa
 const foreground = new Sprite({
-    position : {
+    position: {
         x: offset.x,
         y: offset.y
     },
@@ -144,13 +175,12 @@ const keys = {
 }
 
 //Todos os itens que quero poder mover em meu mapa
-const movables = [background, ...boundaries, foreground]
-
+const movables = [background, ...boundaries, foreground, ...battleZones]
 
 //Retângulo 1 = Representa o jogador
 //Retângulo 2 = Representa os limites do mapa
 //Verifica se dois retângulos (jogador e um obstáculo) estão colidindo.
-function rectangularCollision({ rectangle1, rectangle2 }){
+function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
         rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
@@ -164,132 +194,170 @@ function rectangularCollision({ rectangle1, rectangle2 }){
 let lastKey = ''
 
 //Responsável por 
-function animate(){
+function animate() {
     window.requestAnimationFrame(animate)
 
     background.draw()
     //Desenhando as colisões do mapa
     boundaries.forEach((boundary) => {
-         boundary.draw()
-    })    
+        boundary.draw()
+    })
 
+    //Batalhas do Jogo
+    battleZones.forEach((battleZone) => {
+        battleZone.draw()
+    })
     //Desenhando o jogador no mapa
     player.draw()
     //Desenhando os objetos foreground
     foreground.draw()
 
-
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        // Capturando as batalhas e após o personagem esbarrar em alguma inicia uma batalha
+        for (let i = 0; i < battleZones.length; i++) {
+            const battleZone = battleZones[i]
+            const overlappingArea =
+                (Math.min(
+                    player.position.x + player.width,
+                    battleZone.position.x + battleZone.width
+                ) -
+                    Math.max(player.position.x, battleZone.position.x)) *
+                (Math.min(
+                    player.position.y + player.height,
+                    battleZone.position.y + battleZone.height
+                ) -
+                    Math.max(player.position.y, battleZone.position.y))
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: battleZone
+                }) &&
+                overlappingArea > (player.width * player.height) / 4  //Esse 4 define quanto da área do jogador precisa estar sobreposta com a zona de batalha para a batalha ser disparada.
+            ) {
+                console.log('ÁREA DE BATALHA!')
+                break
+            }
+        }
+    }
 
     let moving = true
     player.moving = false
     // Teclas
-    if(keys.w.pressed && lastKey === 'w'){
+    if (keys.w.pressed && lastKey === 'w') {
         //Sprite de animação do player
         player.moving = true
         player.image = player.sprites.up
 
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
-        for(let i = 0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
-            if(
+            if (
                 rectangularCollision({
                     rectangle1: player,
-                    rectangle2: {...boundary, position:{
-                        x: boundary.position.x,
-                        y: boundary.position.y + 3
-                    }}
+                    rectangle2: {
+                        ...boundary, position: {
+                            x: boundary.position.x,
+                            y: boundary.position.y + 3
+                        }
+                    }
                 })
-            ){
+            ) {
                 console.log('COLISÃO')
                 moving = false
                 break
             }
         }
 
-        if(moving)
-        movables.forEach((movable) => {
-            movable.position.y += 3
-        })
-    } 
-    else if (keys.a.pressed && lastKey === 'a'){
+        if (moving)
+            movables.forEach((movable) => {
+                movable.position.y += 3
+            })
+    }
+    else if (keys.a.pressed && lastKey === 'a') {
         //Sprite de animação do player
         player.moving = true
         player.image = player.sprites.left
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
-        for(let i = 0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
-            if(
+            if (
                 rectangularCollision({
                     rectangle1: player,
-                    rectangle2: {...boundary, position:{
-                        x: boundary.position.x + 3,
-                        y: boundary.position.y
-                    }}
+                    rectangle2: {
+                        ...boundary, position: {
+                            x: boundary.position.x + 3,
+                            y: boundary.position.y
+                        }
+                    }
                 })
-            ){
+            ) {
                 console.log('COLISÃO')
                 moving = false
                 break
             }
         }
 
-        if(moving)
-        movables.forEach((movable) => {
-            movable.position.x += 3
-        }) 
+        if (moving)
+            movables.forEach((movable) => {
+                movable.position.x += 3
+            })
     }
-    else if (keys.s.pressed && lastKey === 's'){
+    else if (keys.s.pressed && lastKey === 's') {
         //Sprite de animação do player
         player.moving = true
         player.image = player.sprites.down
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
-        for(let i = 0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
-            if(
+            if (
                 rectangularCollision({
                     rectangle1: player,
-                    rectangle2: {...boundary, position:{
-                        x: boundary.position.x,
-                        y: boundary.position.y - 3
-                    }}
+                    rectangle2: {
+                        ...boundary, position: {
+                            x: boundary.position.x,
+                            y: boundary.position.y - 3
+                        }
+                    }
                 })
-            ){
+            ) {
                 console.log('COLISÃO')
                 moving = false
                 break
             }
         }
 
-        if(moving)
-        movables.forEach((movable) => {
-            movable.position.y -= 3
-        })
+        if (moving)
+            movables.forEach((movable) => {
+                movable.position.y -= 3
+            })
     }
-    else if (keys.d.pressed && lastKey === 'd'){
+    else if (keys.d.pressed && lastKey === 'd') {
         player.moving = true
         player.image = player.sprites.right
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
-        for(let i = 0; i < boundaries.length; i++){
+        for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
-            if(
+            if (
                 rectangularCollision({
                     rectangle1: player,
-                    rectangle2: {...boundary, position:{
-                        x: boundary.position.x - 3,
-                        y: boundary.position.y
-                    }}
+                    rectangle2: {
+                        ...boundary, position: {
+                            x: boundary.position.x - 3,
+                            y: boundary.position.y
+                        }
+                    }
                 })
-            ){
+            ) {
                 console.log('COLISÃO')
                 moving = false
                 break
             }
         }
 
-        if(moving)
-        movables.forEach((movable) => {
-            movable.position.x -= 3
-        })
+        if (moving)
+            movables.forEach((movable) => {
+                movable.position.x -= 3
+            })
     }
 
     // Trocar para animação de idle se o personagem não estiver se movendo
@@ -393,7 +461,7 @@ function startGame() {
     document.getElementById("storyScreen").style.display = "none";
     document.getElementById("game-canvas").style.display = "block";
 
-    
+
     //Responsável por animar o jogo
     animate();
 }
