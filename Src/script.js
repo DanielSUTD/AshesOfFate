@@ -1,44 +1,38 @@
-//Obtém o elemento <canvas> do HTML e define seu contexto 2D
-const canvas = document.querySelector('canvas');
-const c = canvas.getContext("2d");
+const canvas = document.querySelector('canvas')
+const c = canvas.getContext("2d")
+
+canvas.width = 1024
+canvas.height = 576
 
 
-// Largura e Altura da Tela
-canvas.width = 1024;
-canvas.height = 576;
-
-//Armazena os arrays com as Coordenadas de Colisão do Mapa
+//Armazena as colisões
 const collisionsMap = []
-
-//Construção de Colisões
-//OBS: O 160 é a largura do Mapa
 for (let i = 0; i < collisions.length; i += 160) {
     collisionsMap.push(collisions.slice(i, 160 + i))
 }
 //console.log("CollisionsMap:", collisionsMap);
 
 
-//Armazena os arrays com as Colisões de Batalha do Mapa
+//Armazena as batalhas
 const battleZonesMap = []
-
-//Construção de Colisões de Batalha
-//OBS: O 160 é a largura do Mapa
 for (let i = 0; i < battleZonesData.length; i += 160) {
     battleZonesMap.push(battleZonesData.slice(i, 160 + i))
 }
+//console.log("battleZonesMap:", battleZonesMap);
 
-console.log("battleZonesMap:", battleZonesMap);
 
-//Armazena os objetos que representam os limites de colisão.
-const boundaries = []
 
-//Define a posição inicial do Mapa para centralizar no canvas
+
+//Define a posição inicial do mapa para centralizar no canvas
 const offset = {
     x: -4450,
     y: -1550
 }
 
-//Responsável por criar os objetos de colisão do jogo
+
+//Armazena os objetos que representam os limites de colisão.
+const boundaries = []
+//Responsável por criar os objetos de colisão do Jogo
 // J = COLUNA, I = LINHA
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -53,10 +47,12 @@ collisionsMap.forEach((row, i) => {
             )
     })
 })
+//console.log(boundaries);
 
+
+//Armazena os objetos que representam os limites de batalha.
 const battleZones = []
-
-//Responsável por criar os objetos de colisão de batalha do jogo
+//Responsável por criar os objetos de batalha do Jogo
 // J = COLUNA, I = LINHA
 battleZonesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
@@ -71,14 +67,15 @@ battleZonesMap.forEach((row, i) => {
             )
     })
 })
+//console.log(battleZones);
 
-console.log(battleZones);
 
 //Mapa do Jogo
 const image = new Image()
 image.src = '/assets/Island/AshesOfFate.png'
 
-//Sprite do personagem em movimentação
+
+//Sprite do Personagem em Movimento
 const playerDown = new Image()
 playerDown.src = '/assets/MainCharacter/Walk/WalkDown.png'
 
@@ -91,31 +88,33 @@ playerLeft.src = '/assets/MainCharacter/Walk/WalkLeft.png'
 const playerRight = new Image()
 playerRight.src = '/assets/MainCharacter/Walk/WalkRight.png'
 
-//Sprite do personagem parado
-const idleDown = new Image();
-idleDown.src = "/assets/MainCharacter/Idle/IdleDown.png";
+//Sprites do Personagem Parado
+const idleDown = new Image()
+idleDown.src = '/assets/MainCharacter/Idle/IdleDown.png'
 
-const idleUp = new Image();
-idleUp.src = "/assets/MainCharacter/Idle/IdleUp.png";
+const idleUp = new Image()
+idleUp.src = '/assets/MainCharacter/Idle/IdleUp.png'
 
-const idleLeft = new Image();
-idleLeft.src = "/assets/MainCharacter/Idle/IdleLeft.png";
+const idleLeft = new Image()
+idleLeft.src = '/assets/MainCharacter/Idle/IdleLeft.png'
 
-const idleRight = new Image();
-idleRight.src = "/assets/MainCharacter/Idle/IdleRight.png";
+const idleRight = new Image()
+idleRight.src = '/assets/MainCharacter/Idle/IdleRight.png'
 
 
-//Carrega a imagem que tem os objetos Foreground
+//Foreground do Mapa
 const foregroundImage = new Image()
 foregroundImage.src = '/assets/Island/Foreground.png'
+
 
 // a Imagem é 320 x 96, logo 320 = width, 96 = height
 const SPRITE_WIDTH = 320
 const SPRITE_HEIGHT = 96
+
 //Quantidade de sprites na imagem
 const NUM_SPRITE = 4
 
-//Criando o jogador
+//Criando o Jogador
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - SPRITE_WIDTH / NUM_SPRITE / 2,
@@ -123,7 +122,8 @@ const player = new Sprite({
     },
     image: idleUp,
     frames: {
-        max: 4
+        max: 4,
+        hold: 10
     },
 
     sprites: {
@@ -138,6 +138,17 @@ const player = new Sprite({
     }
 })
 
+function getPlayerHitbox(offsetX, offsetY) {
+    return {
+        position: {
+            x: player.position.x + offsetX,
+            y: player.position.y + offsetY
+        },
+        width: player.width - offsetX * 2,
+        height: player.height - offsetY * 2
+    };
+}
+
 //Criando o Mapa
 const background = new Sprite({
     position: {
@@ -148,7 +159,7 @@ const background = new Sprite({
     image: image
 })
 
-// Objetos que o jogador passa por trás no mapa
+//Criando o Foreground
 const foreground = new Sprite({
     position: {
         x: offset.x,
@@ -174,12 +185,12 @@ const keys = {
     }
 }
 
-//Todos os itens que quero poder mover em meu mapa
+//Itens que vão mover no meu mapa
 const movables = [background, ...boundaries, foreground, ...battleZones]
 
 //Retângulo 1 = Representa o jogador
 //Retângulo 2 = Representa os limites do mapa
-//Verifica se dois retângulos (jogador e um obstáculo) estão colidindo.
+//Verifica se dois retângulos estão entrando em colisão
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (
         rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
@@ -193,25 +204,44 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
 //Responsável por capturar a última tecla digitado pelo jogador
 let lastKey = ''
 
-//Responsável por 
-function animate() {
-    window.requestAnimationFrame(animate)
+//Detecta uma batalha
+const battle = {
+    initiated: false
+}
 
+
+function animate() {
+    const animationId = window.requestAnimationFrame(animate)
+
+    //Mapa
     background.draw()
-    //Desenhando as colisões do mapa
+
+    //Colisões
     boundaries.forEach((boundary) => {
         boundary.draw()
     })
 
-    //Batalhas do Jogo
+    //Batalhas
     battleZones.forEach((battleZone) => {
         battleZone.draw()
     })
-    //Desenhando o jogador no mapa
+
+    //Jogador
     player.draw()
-    //Desenhando os objetos foreground
+    //Foreground
     foreground.draw()
 
+    let moving = true
+    player.animate = false
+
+    // Desenhar a HITBOX do jogador
+    const hitbox = getPlayerHitbox(20, 20);
+    c.fillStyle = 'rgba(0, 255, 0, 0.3)';
+    c.fillRect(hitbox.position.x, hitbox.position.y, hitbox.width, hitbox.height);
+
+    if (battle.initiated) return
+
+    //Ativar uma batalha
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         // Capturando as batalhas e após o personagem esbarrar em alguma inicia uma batalha
         for (let i = 0; i < battleZones.length; i++) {
@@ -229,23 +259,44 @@ function animate() {
                     Math.max(player.position.y, battleZone.position.y))
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: battleZone
                 }) &&
                 overlappingArea > (player.width * player.height) / 4  //Esse 4 define quanto da área do jogador precisa estar sobreposta com a zona de batalha para a batalha ser disparada.
             ) {
                 console.log('ÁREA DE BATALHA!')
+                //Desativar looping atual de animação
+                window.cancelAnimationFrame(animationId)
+                battle.initiated = true
+                gsap.to('#overlappingDiv', {
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete() {
+                        gsap.to('#overlappingDiv', {
+                            opacity: 1,
+                            duration: 0.4,
+                            onComplete(){
+                                //Animação da batalha
+                                animateBattle()
+                                gsap.to('#overlappingDiv', {
+                                    opacity: 0,
+                                    duration: 0.4
+                                })
+                            }
+                        })
+                    }
+                })
                 break
             }
         }
     }
 
-    let moving = true
-    player.moving = false
     // Teclas
     if (keys.w.pressed && lastKey === 'w') {
         //Sprite de animação do player
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.up
 
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
@@ -253,7 +304,7 @@ function animate() {
             const boundary = boundaries[i]
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: {
                         ...boundary, position: {
                             x: boundary.position.x,
@@ -275,14 +326,14 @@ function animate() {
     }
     else if (keys.a.pressed && lastKey === 'a') {
         //Sprite de animação do player
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.left
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: {
                         ...boundary, position: {
                             x: boundary.position.x + 3,
@@ -304,14 +355,14 @@ function animate() {
     }
     else if (keys.s.pressed && lastKey === 's') {
         //Sprite de animação do player
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.down
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: {
                         ...boundary, position: {
                             x: boundary.position.x,
@@ -332,14 +383,14 @@ function animate() {
             })
     }
     else if (keys.d.pressed && lastKey === 'd') {
-        player.moving = true
+        player.animate = true
         player.image = player.sprites.right
         // Capturando as colisões e após o personagem esbarrar em alguma, não deixa mais ele avançar
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
                 rectangularCollision({
-                    rectangle1: player,
+                    rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: {
                         ...boundary, position: {
                             x: boundary.position.x - 3,
@@ -361,7 +412,7 @@ function animate() {
     }
 
     // Trocar para animação de idle se o personagem não estiver se movendo
-    if (!player.moving) {
+    if (!player.animate) {
         switch (lastKey) {
             case 'w':
                 player.image = player.sprites.idleUp;
@@ -377,6 +428,41 @@ function animate() {
                 break;
         }
     }
+}
+
+const battleBackgroundImage = new Image()
+battleBackgroundImage.src = '/assets/Island/BattleBackground.png'
+
+const battleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    },
+    image: battleBackgroundImage
+})
+
+//Imagem ORC
+const orcImage = new Image()
+orcImage.src = '/assets/Enemies/ORC/OrcIdleDown.png'
+
+//Inimigo ORC
+const orc = new Sprite({
+    position: {
+        x: 700,
+        y: 300
+    },
+    image: orcImage,
+    frames:{
+        max: 4,
+        hold: 30
+    },
+    animate: true
+})
+
+function animateBattle() {
+    window.requestAnimationFrame(animateBattle)
+    battleBackground.draw()
+    orc.draw()
 }
 
 
@@ -462,6 +548,5 @@ function startGame() {
     document.getElementById("game-canvas").style.display = "block";
 
 
-    //Responsável por animar o jogo
     animate();
 }
