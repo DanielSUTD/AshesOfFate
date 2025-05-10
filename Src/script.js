@@ -262,7 +262,8 @@ function animate() {
                     rectangle1: getPlayerHitbox(20, 20),
                     rectangle2: battleZone
                 }) &&
-                overlappingArea > (player.width * player.height) / 4  //Esse 4 define quanto da área do jogador precisa estar sobreposta com a zona de batalha para a batalha ser disparada.
+                overlappingArea > (player.width * player.height) / 4 //Esse 4 define quanto da área do jogador precisa estar sobreposta com a zona de batalha para a batalha ser disparada.
+                && Math.random() < 0.01
             ) {
                 console.log('ÁREA DE BATALHA!')
                 //Desativar looping atual de animação
@@ -277,7 +278,7 @@ function animate() {
                         gsap.to('#overlappingDiv', {
                             opacity: 1,
                             duration: 0.4,
-                            onComplete(){
+                            onComplete() {
                                 //Animação da batalha
                                 animateBattle()
                                 gsap.to('#overlappingDiv', {
@@ -452,7 +453,22 @@ const orc = new Sprite({
         y: 300
     },
     image: orcImage,
-    frames:{
+    frames: {
+        max: 4,
+        hold: 30
+    },
+    animate: true,
+    isEnemy: true
+})
+
+//Protagonista
+const zarien = new Sprite({
+    position: {
+        x: 700,
+        y: 300
+    },
+    image: idleUp,
+    frames: {
         max: 4,
         hold: 30
     },
@@ -463,7 +479,23 @@ function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
     orc.draw()
+    zarien.draw()
 }
+
+
+// Eventos de ataque 
+document.querySelectorAll('.attack-buttons button').forEach(button => {
+    button.addEventListener('click', () => {
+        zarien.attack({
+            attack: {
+                name: 'Quick Slash',
+                damage: 10,
+                type: 'Normal'
+            },
+            recipient: orc
+        })
+    })
+})
 
 
 //Movimentação com 
@@ -505,7 +537,10 @@ window.addEventListener('keyup', (e) => {
     }
 })
 
+animateBattle()
 
+
+/* História
 // História do jogo
 const story = `
 Zarien Thorne, um homem consumido pela dor, parte em busca dos lendários Três Artefatos de Terra Desconhecida(Ilhas de Orlath) para ressuscitar sua esposa, morta por uma doença misteriosa.
@@ -550,3 +585,4 @@ function startGame() {
 
     animate();
 }
+*/
