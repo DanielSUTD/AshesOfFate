@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* Base */
 html, body {
@@ -6,7 +6,7 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: black;
-  font-family: "Jersey 15", sans-serif;
+  font-family: "Press Start 2P", cursive;
   color: white;
   text-align: center;
 }
@@ -71,7 +71,7 @@ html, body {
   margin-top: 1rem;
   cursor: pointer;
   background: none;
-  font-family: "Jersey 15", sans-serif;
+  font-family: "Press Start 2P", cursive;
   border: none;
   color: white;
   outline: none;
@@ -132,3 +132,118 @@ html, body {
   justify-content: center;
   margin-top: 1rem;
 }
+
+
+/* Barra de batalha */
+.battle-bar {
+  background-color: black;
+  height: 140px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 4px solid white;
+  display: flex;
+  z-index: 10;
+  font-family: "Press Start 2P", cursive;
+}
+
+/* Área dos botões de ataque */
+.attack-buttons {
+  width: 66.66%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 1rem;
+  gap: 1rem;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Botões de ataque apenas texto */
+.attack-buttons button {
+  background: none;
+  border: none;
+  color: white;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 0.5rem;
+}
+
+/* Efeito de destaque ao passar o mouse */
+.attack-buttons button:hover {
+  color: #00ffff; 
+  text-shadow: 0 0 5px #00ffff;
+}
+
+/* Lado direito com tipo de ataque */
+.attack-type {
+  width: 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 4px solid white;
+  padding: 1rem;
+}
+
+.attack-type h1 {
+  font-size: 0.9rem;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Barra de vida - container base */
+.health-bar-container {
+  background-color: black;
+  width: 250px;
+  position: absolute;
+  border: 4px solid white;
+  padding: 12px;
+  z-index: 20;
+}
+
+/* Posição da barra de vida do inimigo */
+.enemy-health {
+  top: 50px;
+  left: 50px;
+}
+
+/* Posição da barra de vida do jogador */
+.player-health {
+  top: 330px;
+  right: 50px;
+}
+
+/* Nome do personagem */
+.character-name {
+  font-size: 16px;
+  margin: 0;
+  color: white;
+  font-family: "Press Start 2P", cursive;
+}
+
+/* Barra de vida */
+.health-bar {
+  position: relative;
+  margin-top: 10px;
+  height: 5px;
+}
+
+/* Fundo cinza da barra */
+.health-bar-bg {
+  background-color: #ccc;
+  height: 100%;
+  width: 100%;
+}
+
+/* Parte verde da barra que representa a vida */
+.health-bar-fill {
+  background-color: green;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+

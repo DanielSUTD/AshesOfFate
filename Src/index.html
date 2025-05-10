@@ -10,15 +10,19 @@
 
 <body>
   <div class="canvas-container">
+    
     <!-- Menu do Jogo -->
+    <!--
     <div id="introScreen">
       <img src="/img/Logo.png" alt="Ashes of Fate" class="logo-image">
       <button id="initButton" onclick="showStory()">
         <img src="/img/BotaoInicio.png" alt="Ícone" class="button-icon"> INICIAR
       </button>
     </div>
+    -->
 
     <!-- Tela de história do Jogo -->
+    <!--
     <div id="storyScreen">
       <div class="story-container">
         <p id="storyText"></p>
@@ -27,15 +31,49 @@
         </div>
       </div>
     </div>
+    -->
 
+    <!-- Área de Batalha -->
     <div id="overlappingDiv"></div>
+
+
+    <!-- Barra de Vida do Inimigo -->
+    <div class="health-bar-container enemy-health">
+      <h1 class="character-name">ORC</h1>
+      <div class="health-bar">
+        <div class="health-bar-bg"></div>
+        <div class="health-bar-fill" style="width: 100%;"></div>
+      </div>
+    </div>
+
+    <!-- Barra de Vida do Jogador -->
+    <div class="health-bar-container player-health">
+      <h1 class="character-name">Zarien</h1>
+      <div class="health-bar">
+        <div class="health-bar-bg"></div>
+        <div class="health-bar-fill" style="width: 100%;"></div>
+      </div>
+    </div>
+
+
     <canvas id="game-canvas"></canvas>
+
+    <!-- Interações da Batalha -->
+    <div class="battle-bar">
+      <div class="attack-buttons">
+        <button>Quick Slash</button>
+        <button>Lightning Blade</button>
+      </div>
+      <div class="attack-type">
+        <h1>Tipo de Ataque</h1>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
-        integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/classes/Sprite.js"></script>
   <script src="/classes/CollisionBlock.js"></script>
   <script src="/data/collisions.js"></script>
