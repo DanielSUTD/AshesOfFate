@@ -449,7 +449,7 @@ orcImage.src = '/assets/Enemies/ORC/OrcIdleDown.png'
 //Inimigo ORC
 const orc = new Sprite({
     position: {
-        x: 700,
+        x: 500,
         y: 300
     },
     image: orcImage,
@@ -464,7 +464,7 @@ const orc = new Sprite({
 //Protagonista
 const zarien = new Sprite({
     position: {
-        x: 700,
+        x: 450,
         y: 300
     },
     image: idleUp,
@@ -475,24 +475,29 @@ const zarien = new Sprite({
     animate: true
 })
 
+//Sprites de ataque
+const renderedSprites = [orc, zarien]
+
+//Animação da batalha
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     battleBackground.draw()
-    orc.draw()
-    zarien.draw()
+
+    renderedSprites.forEach((sprite) => {
+        sprite.draw()
+    })
 }
 
 
 // Eventos de ataque 
 document.querySelectorAll('.attack-buttons button').forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (e) => {
+        const attackName = e.currentTarget.innerHTML.trim(); 
+        const selectedAttack = attacks[attackName];
         zarien.attack({
-            attack: {
-                name: 'Quick Slash',
-                damage: 10,
-                type: 'Normal'
-            },
-            recipient: orc
+            attack: selectedAttack,
+            recipient: orc,
+            renderedSprites
         })
     })
 })

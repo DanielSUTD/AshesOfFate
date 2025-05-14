@@ -1,10 +1,10 @@
 const attacks = {
-    QuickSlash: {
+    'Quick Slash': {
         name: 'Quick Slash',
         damage: 10,
         type: 'Normal'
     },
-    LightningBlade: {
+    'Lightning Blade': {
         name: 'Lightning Blade',
         damage: 25,
         type: 'Electric'
