@@ -1,7 +1,9 @@
+/* Fonte */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* Base */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -11,7 +13,7 @@ html, body {
   text-align: center;
 }
 
-/* Container principal do canvas */
+/* Container Principal do Canvas */
 .canvas-container {
   display: inline-block;
   position: relative;
@@ -41,7 +43,7 @@ html, body {
   pointer-events: none;
 }
 
-/* Tela inicial */
+/* Tela Inicial */
 #introScreen {
   background-image: url(/img/MapaFundo.png);
   background-size: cover;
@@ -55,7 +57,7 @@ html, body {
   gap: 2rem;
 }
 
-/* Logo do jogo */
+/* Logo do Jogo */
 .logo-image {
   max-width: 80%;
   height: auto;
@@ -78,14 +80,14 @@ html, body {
   padding: 0;
 }
 
-/* Ícone do botão */
+/* Ícone do Botão */
 .button-icon {
   height: 1.5em;
   width: auto;
   transition: all 0.3s ease;
 }
 
-/* Tela da história */
+/* Tela da História */
 #storyScreen {
   display: none;
   position: fixed;
@@ -94,7 +96,7 @@ html, body {
   background: rgba(0, 0, 0, 0.9);
 }
 
-/* Container da história */
+/* Container da História */
 .story-container {
   display: flex;
   flex-direction: column;
@@ -106,7 +108,7 @@ html, body {
   margin: 0 auto;
 }
 
-/* Texto da história */
+/* Texto da História */
 #storyText {
   white-space: pre-line;
   font-size: 1.2rem;
@@ -125,7 +127,7 @@ html, body {
   transition: none;
 }
 
-/* Container dos botões */
+/* Container dos Botões */
 .button-container {
   width: 100%;
   display: flex;
@@ -134,111 +136,111 @@ html, body {
 }
 
 
-/* Barra de batalha */
+/* Barra de Batalha */
 .battle-bar {
-  background-color: black;
-  height: 140px;
+  height: 100px;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 4px solid white;
   display: flex;
   z-index: 10;
   font-family: "Press Start 2P", cursive;
 }
 
-/* Área dos botões de ataque */
+/* Área dos Botões de Ataque */
 .attack-buttons {
   width: 66.66%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
   padding: 1rem;
-  gap: 1rem;
   justify-items: center;
   align-items: center;
 }
 
-/* Botões de ataque apenas texto */
+/* Botões de Ataque */
 .attack-buttons button {
-  background: none;
-  border: none;
+  background-color: #1a1a1a;
+  border: 2px solid rgb(0, 0, 0);
   color: white;
   font-family: "Press Start 2P", cursive;
-  font-size: 0.9rem;
-  text-transform: uppercase;
+  font-size: 0.7rem;
+  text-transform: none;
   cursor: pointer;
-  transition: color 0.3s;
-  padding: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  width: fit-content;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-/* Efeito de destaque ao passar o mouse */
+/* Destaque no Botão*/
 .attack-buttons button:hover {
-  color: #00ffff; 
-  text-shadow: 0 0 5px #00ffff;
+  background-color: white;
+  color: black;
 }
 
-/* Lado direito com tipo de ataque */
+/* Área do Tipo de Ataque */
 .attack-type {
   width: 33.33%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-left: 4px solid white;
   padding: 1rem;
 }
 
+/* Tipo de Ataque */
 .attack-type h1 {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   color: white;
-  text-transform: uppercase;
+  background-color: #1a1a1a;
+  padding: 0.5rem 1rem;
+  border: 2px solid rgb(0, 0, 0);
+  text-transform: none;
 }
 
-/* Barra de vida - container base */
-.health-bar-container {
-  background-color: black;
-  width: 250px;
+/* Div que controla toda a Batalha */
+.battle-status-container {
   position: absolute;
-  border: 4px solid white;
-  padding: 12px;
-  z-index: 20;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  z-index: 30;
 }
 
-/* Posição da barra de vida do inimigo */
-.enemy-health {
-  top: 50px;
-  left: 50px;
+/* Vida do Player e Enemy */
+.health-bar-container {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 12px;
+  width: auto;
 }
 
-/* Posição da barra de vida do jogador */
-.player-health {
-  top: 330px;
-  right: 50px;
+/* Ícone do Personagem */
+.character-icon {
+  width: 64px;
+  height: 64px;
+  display: block;
 }
 
-/* Nome do personagem */
-.character-name {
-  font-size: 16px;
-  margin: 0;
-  color: white;
-  font-family: "Press Start 2P", cursive;
-}
-
-/* Barra de vida */
+/* Área da Barra de Vida */
 .health-bar {
   position: relative;
-  margin-top: 10px;
-  height: 5px;
+  height: 6px;
+  width: 180px;
 }
 
-/* Fundo cinza da barra */
+/* Fundo da Barra de Vida */
 .health-bar-bg {
   background-color: #ccc;
   height: 100%;
   width: 100%;
 }
 
-/* Parte verde da barra que representa a vida */
+/* Barra de Vida */
 .health-bar-fill {
   background-color: green;
   height: 100%;
@@ -247,3 +249,28 @@ html, body {
   left: 0;
 }
 
+/* VS */
+.vs-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* VS - Icon */
+.vs-icon {
+  width: 60px;
+  height: auto;
+}
+
+/* Barra de Diálogo */
+#dialogue-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0);
+  padding: 12px;
+  display: none;
+  cursor: pointer;
+}

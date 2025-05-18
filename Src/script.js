@@ -431,77 +431,6 @@ function animate() {
     }
 }
 
-const battleBackgroundImage = new Image()
-battleBackgroundImage.src = '/assets/Island/BattleBackground.png'
-
-const battleBackground = new Sprite({
-    position: {
-        x: 0,
-        y: 0
-    },
-    image: battleBackgroundImage
-})
-
-//Imagem ORC
-const orcImage = new Image()
-orcImage.src = '/assets/Enemies/ORC/OrcIdleDown.png'
-
-//Inimigo ORC
-const orc = new Sprite({
-    position: {
-        x: 500,
-        y: 300
-    },
-    image: orcImage,
-    frames: {
-        max: 4,
-        hold: 30
-    },
-    animate: true,
-    isEnemy: true
-})
-
-//Protagonista
-const zarien = new Sprite({
-    position: {
-        x: 450,
-        y: 300
-    },
-    image: idleUp,
-    frames: {
-        max: 4,
-        hold: 30
-    },
-    animate: true
-})
-
-//Sprites de ataque
-const renderedSprites = [orc, zarien]
-
-//Animação da batalha
-function animateBattle() {
-    window.requestAnimationFrame(animateBattle)
-    battleBackground.draw()
-
-    renderedSprites.forEach((sprite) => {
-        sprite.draw()
-    })
-}
-
-
-// Eventos de ataque 
-document.querySelectorAll('.attack-buttons button').forEach(button => {
-    button.addEventListener('click', (e) => {
-        const attackName = e.currentTarget.innerHTML.trim(); 
-        const selectedAttack = attacks[attackName];
-        zarien.attack({
-            attack: selectedAttack,
-            recipient: orc,
-            renderedSprites
-        })
-    })
-})
-
 
 //Movimentação com 
 window.addEventListener('keydown', (e) => {
@@ -541,8 +470,6 @@ window.addEventListener('keyup', (e) => {
             break
     }
 })
-
-animateBattle()
 
 
 /* História
