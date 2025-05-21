@@ -61,6 +61,7 @@ const queue = []
 //Eventos de Ataque
 document.querySelectorAll('.attack-buttons button').forEach(button => {
     button.addEventListener('click', (e) => {
+
         const attackName = e.currentTarget.innerHTML.trim();
         const selectedAttack = attacks[attackName];
 
@@ -74,8 +75,6 @@ document.querySelectorAll('.attack-buttons button').forEach(button => {
             queue.push(() => {
                 mage.faint()
             })
-
-            return
         }
 
         //Randomizar Ataque
@@ -87,8 +86,17 @@ document.querySelectorAll('.attack-buttons button').forEach(button => {
                 recipient: zarien,
                 renderedSprites
             })
+
+
+            if (zarien.health <= 0) {
+                queue.push(() => {
+                    zarien.faint()
+                })
+            }
         })
+
     })
+
     button.addEventListener('mouseenter', (e) => {
         const selectedAttack = attacks[e.currentTarget.innerHTML]
         document.querySelector('#attack-style').innerHTML = selectedAttack.type
@@ -101,5 +109,7 @@ document.querySelector('#dialogue-box').addEventListener('click', (e) => {
     if (queue.length > 0) {
         queue[0]()
         queue.shift()
-    } else e.currentTarget.style.display = 'none'
+    } else {
+        e.currentTarget.style.display = 'none'
+    }
 })
