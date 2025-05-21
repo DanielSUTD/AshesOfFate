@@ -136,9 +136,11 @@ body {
 }
 
 
+
+/* Parte de Batalhas */
 /* Barra de Batalha */
 .battle-bar {
-  height: 100px;
+  height: 110px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -165,6 +167,7 @@ body {
   border: 2px solid rgb(0, 0, 0);
   color: white;
   font-family: "Press Start 2P", cursive;
+  margin-left: 30px;
   font-size: 0.7rem;
   text-transform: none;
   cursor: pointer;
@@ -191,6 +194,7 @@ body {
 /* Tipo de Ataque */
 .attack-type h1 {
   font-size: 0.7rem;
+  margin-right: 65px;
   color: white;
   background-color: #1a1a1a;
   padding: 0.5rem 1rem;
