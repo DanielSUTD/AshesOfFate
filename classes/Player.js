@@ -14,6 +14,16 @@ class Player extends Sprite {
         this.attacks = attacks
     }
 
+    faint() {
+        document.querySelector('#dialogue-box').innerHTML = this.name + ' foi derrotado! '
+        gsap.to(this.position, {
+            y: this.position.y + 20
+        })
+        gsap.to(this, {
+            opacity: 0
+        })
+    }
+
     //Animação de Ataque
     attack({ attack, recipient, renderedSprites }) {
 

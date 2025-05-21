@@ -70,6 +70,14 @@ document.querySelectorAll('.attack-buttons button').forEach(button => {
             renderedSprites
         })
 
+        if (mage.health <= 0) {
+            queue.push(() => {
+                mage.faint()
+            })
+
+            return
+        }
+
         //Randomizar Ataque
         const randomAttack = mage.attacks[Math.floor(Math.random() * mage.attacks.length)]
 
@@ -82,9 +90,9 @@ document.querySelectorAll('.attack-buttons button').forEach(button => {
         })
     })
     button.addEventListener('mouseenter', (e) => {
-            const selectedAttack = attacks[e.currentTarget.innerHTML]
-            document.querySelector('#attack-style').innerHTML = selectedAttack.type
-            document.querySelector('#attack-style').style.color = selectedAttack.color
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        document.querySelector('#attack-style').innerHTML = selectedAttack.type
+        document.querySelector('#attack-style').style.color = selectedAttack.color
     })
 })
 
