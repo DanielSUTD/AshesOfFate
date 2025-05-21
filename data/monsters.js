@@ -16,6 +16,7 @@ const monsters = {
         },
         animate: true,
         isEnemy: true,
-        name: 'Mage'
+        name: 'Mage',
+        attacks: [attacks['Tackle'], attacks['Fireball']]
     }
 }

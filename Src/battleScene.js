@@ -3,6 +3,8 @@ battleBackgroundImage.src = '/assets/Island/BattleBackground.png'
 
 const zarienBattle = new Image()
 zarienBattle.src = '/assets/BattleImg/ZarienIdleUp.png'
+
+
 //Fundo da Batalha
 const battleBackground = new Sprite({
     position: {
@@ -27,16 +29,20 @@ const zarien = new Player({
         hold: 30
     },
     animate: true,
-    name: 'Zarien'
+    name: 'Zarien',
+    attacks: [attacks['Quick Slash']]
 })
 
 //Sprites de Ataque
 const renderedSprites = [mage, zarien]
 
-//Criando Ataques
-const button = document.createElement('button')
-button.innerHTML = 'Quick Slash'
-document.querySelector('.attack-buttons').append(button)
+
+zarien.attacks.forEach((attack) => {
+    //Criando Ataques
+    const button = document.createElement('button')
+    button.innerHTML = attack.name
+    document.querySelector('.attack-buttons').append(button)
+})
 
 
 function animateBattle() {
@@ -64,21 +70,27 @@ document.querySelectorAll('.attack-buttons button').forEach(button => {
             renderedSprites
         })
 
+        //Randomizar Ataque
+        const randomAttack = mage.attacks[Math.floor(Math.random() * mage.attacks.length)]
+
         queue.push(() => {
             mage.attack({
-                attack: attacks['Fireball'],
+                attack: randomAttack,
                 recipient: zarien,
                 renderedSprites
             })
         })
-
-
+    })
+    button.addEventListener('mouseenter', (e) => {
+            const selectedAttack = attacks[e.currentTarget.innerHTML]
+            document.querySelector('#attack-style').innerHTML = selectedAttack.type
+            document.querySelector('#attack-style').style.color = selectedAttack.color
     })
 })
 
 //Eventos de Diálogo
 document.querySelector('#dialogue-box').addEventListener('click', (e) => {
-    if(queue.length > 0){
+    if (queue.length > 0) {
         queue[0]()
         queue.shift()
     } else e.currentTarget.style.display = 'none'
