@@ -280,6 +280,7 @@ function animate() {
                             duration: 0.4,
                             onComplete() {
                                 //Animação da batalha
+                                initBattle()
                                 animateBattle()
                                 gsap.to('#overlappingDiv', {
                                     opacity: 0,

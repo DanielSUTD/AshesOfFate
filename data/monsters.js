@@ -1,7 +1,3 @@
-//Imagem ORC
-const mageImage = new Image()
-mageImage.src = '/assets/BattleImg/MageBattle.png'
-
 //Inimigos do Jogo
 const monsters = {
     mage: {
@@ -9,7 +5,8 @@ const monsters = {
             x: 600,
             y: 350
         },
-        image: mageImage,
+        image: {
+            src: '/assets/BattleImg/MageBattle.png'},
         frames: {
             max: 14,
             hold: 30
