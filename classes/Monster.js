@@ -1,8 +1,9 @@
 class Monster extends Sprite {
 
-    constructor({ position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0, isEnemy = false, name, attacks }) {
+    constructor({ position, velocity, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0, isEnemy = false, name, attacks }) {
         super({
             position,
+            velocity,
             image,
             frames,
             sprites,
@@ -24,7 +25,7 @@ class Monster extends Sprite {
         gsap.to(this, {
             opacity: 0
         })
-        //Som(Batalha terminou)
+        //Som(Batalha finalizada)
         //audio.battle.stop()
         //Som(Quando é derrotado)
         //audio.victory.play()
