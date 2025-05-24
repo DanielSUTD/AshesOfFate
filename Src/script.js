@@ -265,9 +265,17 @@ function animate() {
                 overlappingArea > (player.width * player.height) / 4 //Esse 4 define quanto da área do jogador precisa estar sobreposta com a zona de batalha para a batalha ser disparada.
                 && Math.random() < 0.01
             ) {
-                console.log('ÁREA DE BATALHA!')
+                //console.log('ÁREA DE BATALHA!')
                 //Desativar looping atual de animação
                 window.cancelAnimationFrame(animationId)
+
+                //Som do Mapa(Exploração)
+                //audio.Map.stop()
+                //Som do Início da Batalha
+                //audio.initBattle.play()
+                //Som da Batalha
+                //audio.battle.play()
+
                 battle.initiated = true
                 gsap.to('#overlappingDiv', {
                     opacity: 1,
@@ -315,7 +323,7 @@ function animate() {
                     }
                 })
             ) {
-                console.log('COLISÃO')
+                //console.log('COLISÃO')
                 moving = false
                 break
             }
@@ -344,7 +352,7 @@ function animate() {
                     }
                 })
             ) {
-                console.log('COLISÃO')
+                //console.log('COLISÃO')
                 moving = false
                 break
             }
@@ -373,7 +381,7 @@ function animate() {
                     }
                 })
             ) {
-                console.log('COLISÃO')
+                //console.log('COLISÃO')
                 moving = false
                 break
             }
@@ -401,7 +409,7 @@ function animate() {
                     }
                 })
             ) {
-                console.log('COLISÃO')
+                //console.log('COLISÃO')
                 moving = false
                 break
             }
@@ -469,6 +477,15 @@ window.addEventListener('keyup', (e) => {
         case 'd':
             keys.d.pressed = false
             break
+    }
+})
+
+let clicked = false
+addEventListener('click', () => {
+    if(!clicked){
+        //Som do Mapa(Exploração)
+        //audio.Map.play()
+        clicked = true
     }
 })
 

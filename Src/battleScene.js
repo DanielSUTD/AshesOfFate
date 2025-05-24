@@ -82,6 +82,8 @@ function initBattle() {
                             })
 
                             battle.initiated = false
+                            //Som do Jogo
+                            //audio.Map.play()
                         }
                     })
                 })
@@ -115,6 +117,8 @@ function initBattle() {
                                 })
 
                                 battle.initiated = false
+                                //Som do Jogo
+                                //audio.Map.play()
                             }
                         })
                     })
@@ -141,8 +145,9 @@ function animateBattle() {
     })
 }
 
-initBattle()
-animateBattle()
+animate()
+//initBattle()
+//animateBattle()
 
 //Diálogo
 document.querySelector('#dialogue-box').addEventListener('click', (e) => {

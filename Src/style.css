@@ -140,6 +140,11 @@ body {
 
 /* Parte de Batalhas */
 /* Barra de Batalha */
+
+#user-interface{
+  display: none;
+}
+
 .battle-bar {
   height: 100px;
   position: absolute;

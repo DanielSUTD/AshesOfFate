@@ -41,48 +41,51 @@
 
     <!-- Batalha -->
     <div id="user-interface">
-    <div class="battle-status-container">
+      <div class="battle-status-container">
 
 
-      <!-- Zarien -->
-      <div class="health-bar-container player-health">
-        <img src="/img/ZarienIcon.png" alt="Zarien" class="character-icon">
-        <div class="health-bar">
-          <div class="health-bar-bg"></div>
-          <div class="health-bar-fill" style="width: 100%;"></div>
+        <!-- Zarien -->
+        <div class="health-bar-container player-health">
+          <img src="/img/ZarienIcon.png" alt="Zarien" class="character-icon">
+          <div class="health-bar">
+            <div class="health-bar-bg"></div>
+            <div class="health-bar-fill" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- VS -->
+        <div class="vs-icon-container">
+          <img src="/img/VS.png" alt="VS" class="vs-icon">
+        </div>
+
+
+        <!-- Enemy -->
+        <div class="health-bar-container enemy-health">
+          <div class="health-bar">
+            <div class="health-bar-bg"></div>
+            <div class="health-bar-fill" style="width: 100%;"></div>
+          </div>
+          <img src="/img/MageIcon.png" alt="Mage" class="character-icon">
+        </div>
+
+      </div>
+
+      <!-- Interações da Batalha -->
+      <div class="battle-bar">
+        <div id="dialogue-box"></div>
+        <div class="attack-buttons">
+        </div>
+        <div class="attack-type">
+          <h1 id="attack-style">Tipo de Ataque</h1>
         </div>
       </div>
-
-      <!-- VS -->
-      <div class="vs-icon-container">
-        <img src="/img/VS.png" alt="VS" class="vs-icon">
-      </div>
-
-
-      <!-- Enemy -->
-      <div class="health-bar-container enemy-health">
-        <div class="health-bar">
-          <div class="health-bar-bg"></div>
-          <div class="health-bar-fill" style="width: 100%;"></div>
-        </div>
-        <img src="/img/MageIcon.png" alt="Mage" class="character-icon">
-      </div>
-
-    </div>
-
-    <!-- Interações da Batalha -->
-    <div class="battle-bar">
-      <div id="dialogue-box"></div>
-      <div class="attack-buttons">
-      </div>
-      <div class="attack-type">
-        <h1 id="attack-style">Tipo de Ataque</h1>
-      </div>
-    </div>
     </div>
   </div>
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"
+    integrity="sha512-xi/RZRIF/S0hJ+yJJYuZ5yk6/8pCiRlEXZzoguSMl+vk2i3m6UjUO/WcZ11blRL/O+rnj94JRGwt/CHbc9+6EA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
     integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
