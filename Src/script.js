@@ -21,13 +21,11 @@ for (let i = 0; i < battleZonesData.length; i += 160) {
 //console.log("battleZonesMap:", battleZonesMap);
 
 //Armazena os NPCS
-/*
 const charactersMap = []
 for (let i = 0; i < charactersMapData.length; i += 160) {
-    battleZonesMap.push(charactersMapData.slice(i, 160 + i))
+    charactersMap.push(charactersMapData.slice(i, 160 + i))
 }
 //console.log("charactersMapData:", charactersMapData);
-*/
 
 //Posição Inicial
 const offset = {
@@ -64,7 +62,7 @@ const battleZones = []
 // J = COLUNA, I = LINHA
 battleZonesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-        if (symbol === 21464)
+        if (symbol === 28495)
             battleZones.push(
                 new Boundary({
                     position: {
@@ -77,28 +75,29 @@ battleZonesMap.forEach((row, i) => {
 })
 //console.log(battleZones);
 
-/*
+
 //Armazena os objetos com os NPCS
 const characters = []
 
 //NPCS
 const drayven = new Image()
-drayven.src = ''
-const oldManImg = new Image()
-oldManImg.src = ''
+drayven.src = '/assets/Character/Drayven.png'
+
+const oldman = new Image()
+oldman.src = '/assets/Character/OldMan.png'
 
 //Responsável por criar os objetos(NPCS)
 charactersMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-        // 1026 === Drayven
-        if (symbol === 1026) {
+        // 28495 === Drayven
+        if (symbol === 28493) {
             characters.push(
                 new Character({
                     position: {
                         x: j * Boundary.width + offset.x,
                         y: i * Boundary.height + offset.y
                     },
-                    image: Drayven,
+                    image: drayven,
                     frames: {
                         max: 4,
                         hold: 60
@@ -109,20 +108,21 @@ charactersMap.forEach((row, i) => {
                 })
             )
         }
-        // 1031 === oldMan
-        else if (symbol === 1031) {
+        // 28496 === Outro NPC
+        else if (symbol === 28494) {
             characters.push(
                 new Character({
                     position: {
                         x: j * Boundary.width + offset.x,
                         y: i * Boundary.height + offset.y
                     },
-                    image: oldManImg,
+                    image: oldman,
                     frames: {
                         max: 4,
                         hold: 60
                     },
-                    scale: 3,
+                    scale: 2.5,
+                    animate: true,
                     dialogue: ['Essa vila é antiga...']
                 })
             )
@@ -140,7 +140,6 @@ charactersMap.forEach((row, i) => {
         }
     })
 })
-*/
 
 //Mapa
 const image = new Image()
@@ -251,7 +250,8 @@ const movables = [
     background,
     ...boundaries,
     foreground,
-    ...battleZones
+    ...battleZones,
+    ...characters
 ]
 
 //Itens que vão renderizar no meu Mapa
@@ -259,6 +259,7 @@ const renderables = [
     background,
     ...boundaries,
     ...battleZones,
+    ...characters,
     player,
     foreground
 ]
@@ -283,9 +284,11 @@ function animate() {
     player.animate = false
 
     // Desenhar a HITBOX do Player
+    /*
     const hitbox = getPlayerHitbox(20, 20);
     c.fillStyle = 'rgba(0, 255, 0, 0.3)';
     c.fillRect(hitbox.position.x, hitbox.position.y, hitbox.width, hitbox.height);
+    */
 
     if (battle.initiated) return
 
@@ -319,7 +322,7 @@ function animate() {
                 window.cancelAnimationFrame(animationId)
 
                 //Som do Mapa(Exploração)
-                //audio.Map.stop()
+                audio.Map.stop()
                 //Som do Início da Batalha
                 //audio.initBattle.play()
                 //Som da Batalha
@@ -358,14 +361,13 @@ function animate() {
         player.animate = true
         player.image = player.sprites.up
 
-        //Colisão entre o NPC e o Player
-        /*
+        
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 0, y: 3 }
         })
-        */
+        
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
@@ -397,13 +399,13 @@ function animate() {
         player.animate = true
         player.image = player.sprites.left
 
-        /*
+        
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 3, y: 0 }
         })
-        */
+        
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
@@ -435,13 +437,13 @@ function animate() {
         player.animate = true
         player.image = player.sprites.down
 
-        /*
+        
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 0, y: -3 }
         })
-        */
+        
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
@@ -472,13 +474,13 @@ function animate() {
         player.animate = true
         player.image = player.sprites.right
 
-        /*
+        
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: -3, y: 0 }
         })
-        */
+        
 
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
@@ -603,7 +605,7 @@ let clicked = false
 addEventListener('click', () => {
     if (!clicked) {
         //Som do Mapa(Exploração)
-        //audio.Map.play()
+        audio.Map.play()
         clicked = true
     }
 })

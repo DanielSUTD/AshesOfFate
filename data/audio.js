@@ -1,7 +1,7 @@
 const audio = {
     //SOM - Exploração
     Map: new Howl({
-        src: './',
+        src: '/audio/merry-on-the-floor.mp3',
         html5: true,
         volume: 0.1
     }),
