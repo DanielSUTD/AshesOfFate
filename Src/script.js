@@ -29,8 +29,8 @@ for (let i = 0; i < charactersMapData.length; i += 160) {
 
 //Posição Inicial
 const offset = {
-    x: -4450,
-    y: -1550
+    x: -7000,
+    y: -2460
 }
 
 
@@ -179,7 +179,7 @@ const player = new Sprite({
         x: canvas.width / 2 - SPRITE_WIDTH / NUM_SPRITE / 2,
         y: canvas.height / 2 - SPRITE_HEIGHT / 2
     },
-    image: idleUp,
+    image: idleLeft,
     frames: {
         max: 4,
         hold: 10
