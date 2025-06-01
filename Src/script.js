@@ -657,3 +657,37 @@ function startGame() {
     animate();
 }
 */
+
+/* Modal do puzzle binário */
+const modal = document.getElementById("binaryModal");
+  const closeBtn = document.querySelector(".close-btn");
+  const submitBtn = document.getElementById("submit-answer");
+  const feedback = document.getElementById("feedback");
+
+  function openBinaryPuzzle() {
+    modal.style.display = "block";
+    document.getElementById("binary-answer").value = "";
+    feedback.textContent = "";
+  }
+
+  closeBtn.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  submitBtn.onclick = function () {
+    const answer = document.getElementById("binary-answer").value.trim().toLowerCase();
+    if (answer === "hello") {
+      feedback.style.color = "darkgreen";
+      feedback.textContent = "✔️ Resposta correta!";
+      setTimeout(() => modal.style.display = "none", 1500);
+    } else {
+      feedback.style.color = "darkred";
+      feedback.textContent = "❌ Tente novamente.";
+    }
+  };
