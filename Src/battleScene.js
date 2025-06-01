@@ -15,8 +15,17 @@ let mage
 let zarien
 let renderedSprites
 let queue
-
 let battleAnimationId
+let canClickDialogue = true
+
+function setAttackButtonsEnabled(enabled) {
+    document.querySelectorAll('.attack-buttons button').forEach(button => {
+        button.disabled = !enabled
+        button.style.opacity = enabled ? '1' : '0'
+        button.style.cursor = enabled ? 'pointer' : 'default'
+        button.style.pointerEvents = enabled ? 'auto' : 'none'
+    })
+}
 
 function initBattle() {
 
@@ -51,10 +60,12 @@ function initBattle() {
         button.innerHTML = attack.name
         document.querySelector('.attack-buttons').append(button)
     })
+    setAttackButtonsEnabled(true)
 
     //Eventos de Ataque
     document.querySelectorAll('.attack-buttons button').forEach(button => {
         button.addEventListener('click', (e) => {
+            setAttackButtonsEnabled(false)
 
             const attackName = e.currentTarget.innerHTML.trim();
             const selectedAttack = attacks[attackName];
@@ -83,7 +94,7 @@ function initBattle() {
 
                             battle.initiated = false
                             //Som do Jogo
-                            //audio.Map.play()
+                            audio.Map.play()
                         }
                     })
                 })
@@ -151,10 +162,18 @@ animate()
 
 //Diálogo
 document.querySelector('#dialogue-box').addEventListener('click', (e) => {
+    if (!canClickDialogue || e.currentTarget.style.display === 'none') return
+
+    canClickDialogue = false
+    setTimeout(() => {
+        canClickDialogue = true
+    }, 500)
+
     if (queue.length > 0) {
         queue[0]()
         queue.shift()
     } else {
         e.currentTarget.style.display = 'none'
+        setAttackButtonsEnabled(true)
     }
 })
