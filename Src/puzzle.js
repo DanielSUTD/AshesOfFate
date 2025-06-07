@@ -24,13 +24,13 @@ function verifyBinary() {
   const answer = document.getElementById("binaryAnswer").value.trim().toLowerCase();
   const feedback = document.getElementById("binaryFeedback");
   
-  if (answer === "hello") {
-    feedback.style.color = "#4CAF50";
-    feedback.textContent = "✔️ Resposta correta!";
+  if (answer === "vida") {
+    feedback.style.color = "#265c28";
+    feedback.textContent = "Resposta correta!";
     setTimeout(() => closeModal('binaryModal'), 1500);
   } else {
-    feedback.style.color = "#f44336";
-    feedback.textContent = "❌ Tente novamente.";
+    feedback.style.color = "#891616";
+    feedback.textContent = "Tente novamente.";
   }
 }
 
@@ -40,18 +40,18 @@ function verifyMorse() {
   const feedback = document.getElementById("morseFeedback");
   
   if (answer === "DESTINO") {
-    feedback.style.color = "#4CAF50";
-    feedback.textContent = "✔️ Resposta correta!";
+    feedback.style.color = "#265c28";
+    feedback.textContent = "Resposta correta!";
     setTimeout(() => closeModal('morseModal'), 1500);
   } else {
-    feedback.style.color = "#f44336";
-    feedback.textContent = "❌ Tente novamente.";
+    feedback.style.color = "#891616";
+    feedback.textContent = "Tente novamente.";
   }
 }
 
 // Puzzle Musical
 const sequenceSound = new Howl({
-  src: ['../audio/puzzle-music.mp4'],
+  src: ['../audio/puzzle-music.mp3'],
   html5: true,
   pool: 1
 });
@@ -94,7 +94,7 @@ function updateUserSequenceDisplay() {
     noteElement.textContent = note;
     noteElement.classList.add('user-note');
     if (note !== correctSequence[index]) {
-      noteElement.style.backgroundColor = '#ff6b6b';
+      noteElement.style.backgroundColor = '#891616';
     }
     container.appendChild(noteElement);
   });
@@ -119,20 +119,20 @@ function checkUserSequence() {
   const feedback = document.getElementById('musicFeedback');
   
   if (userSequence.length !== correctSequence.length) {
-    feedback.style.color = "#f44336";
-    feedback.textContent = `❌ Sequência incompleta. Adicione mais ${correctSequence.length - userSequence.length} notas.`;
+    feedback.style.color = "#891616";
+    feedback.textContent = `Sequência incompleta. Adicione mais ${correctSequence.length - userSequence.length} notas.`;
     return;
   }
 
   const isCorrect = userSequence.every((note, i) => note === correctSequence[i]);
   
   if (isCorrect) {
-    feedback.style.color = "#4CAF50";
-    feedback.textContent = "✔️ Sequência correta!";
+    feedback.style.color = "#265c28";
+    feedback.textContent = "Sequência correta!";
     setTimeout(() => closeModal('musicModal'), 1500);
   } else {
-    feedback.style.color = "#f44336";
-    feedback.textContent = "❌ Sequência incorreta. Tente novamente.";
+    feedback.style.color = "#891616";
+    feedback.textContent = "Sequência incorreta. Tente novamente.";
     setTimeout(() => {
       userSequence = [];
       updateUserSequenceDisplay();
@@ -149,12 +149,12 @@ function verifyIsland() {
   const feedback = document.getElementById("islandFeedback");
   
   if (answer === "ilha" || answer === "ilhas") {
-    feedback.style.color = "#4CAF50";
-    feedback.textContent = "✔️ Correto! Todos são países-ilhas!";
+    feedback.style.color = "#265c28";
+    feedback.textContent = "Correto! Todos são países-ilhas!";
     setTimeout(() => closeModal('islandModal'), 1500);
   } else {
-    feedback.style.color = "#f44336";
-    feedback.textContent = "❌ Tente novamente. Pense em geografia...";
+    feedback.style.color = "#891616";
+    feedback.textContent = "Tente novamente. Pense em geografia...";
   }
 }
 
