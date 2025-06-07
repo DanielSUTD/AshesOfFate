@@ -5,6 +5,7 @@ let isModalOpen = false;
 function openPuzzle(modalId) {
   document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
+  cancelAnimationFrame(animationId);
 
   if (modalId === 'musicModal') {
     initNoteButtons();
@@ -17,13 +18,22 @@ function openPuzzle(modalId) {
 function closeModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
   isModalOpen = false;
+  if (!battle.initiated) {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+    }
+    animate();
+  }
+
+  // Foca no canvas para capturar eventos de teclado
+  canvas.focus();
 }
 
 // Puzzle Binário
 function verifyBinary() {
   const answer = document.getElementById("binaryAnswer").value.trim().toLowerCase();
   const feedback = document.getElementById("binaryFeedback");
-  
+
   if (answer === "vida") {
     feedback.style.color = "#265c28";
     feedback.textContent = "Resposta correta!";
@@ -38,7 +48,7 @@ function verifyBinary() {
 function verifyMorse() {
   const answer = document.getElementById("morseAnswer").value.trim().toUpperCase();
   const feedback = document.getElementById("morseFeedback");
-  
+
   if (answer === "DESTINO") {
     feedback.style.color = "#265c28";
     feedback.textContent = "Resposta correta!";
@@ -67,7 +77,7 @@ function initNoteButtons() {
   const notes = ['Dó', 'Ré', 'Mi', 'Fá', 'Sol', 'Lá', 'Si'];
   const container = document.getElementById('noteButtons');
   container.innerHTML = '';
-  
+
   notes.forEach(note => {
     const button = document.createElement('button');
     button.textContent = note;
@@ -88,7 +98,7 @@ function addNoteToSequence(note) {
 function updateUserSequenceDisplay() {
   const container = document.getElementById('userSequence');
   container.innerHTML = '';
-  
+
   userSequence.forEach((note, index) => {
     const noteElement = document.createElement('div');
     noteElement.textContent = note;
@@ -102,22 +112,22 @@ function updateUserSequenceDisplay() {
 
 function playCorrectSequence() {
   if (isPlaying) return;
-  
+
   isPlaying = true;
   const feedback = document.getElementById('musicFeedback');
   feedback.textContent = "Tocando sequência...";
-  
+
   sequenceSound.once('end', () => {
     isPlaying = false;
     feedback.textContent = "Repita a sequência";
   });
-  
+
   sequenceSound.play();
 }
 
 function checkUserSequence() {
   const feedback = document.getElementById('musicFeedback');
-  
+
   if (userSequence.length !== correctSequence.length) {
     feedback.style.color = "#891616";
     feedback.textContent = `Sequência incompleta. Adicione mais ${correctSequence.length - userSequence.length} notas.`;
@@ -125,7 +135,7 @@ function checkUserSequence() {
   }
 
   const isCorrect = userSequence.every((note, i) => note === correctSequence[i]);
-  
+
   if (isCorrect) {
     feedback.style.color = "#265c28";
     feedback.textContent = "Sequência correta!";
@@ -147,7 +157,7 @@ document.getElementById('submitIsland').addEventListener('click', verifyIsland);
 function verifyIsland() {
   const answer = document.getElementById("islandAnswer").value.trim().toLowerCase();
   const feedback = document.getElementById("islandFeedback");
-  
+
   if (answer === "ilha" || answer === "ilhas") {
     feedback.style.color = "#265c28";
     feedback.textContent = "Correto! Todos são países-ilhas!";
@@ -160,7 +170,7 @@ function verifyIsland() {
 
 // Inicialização
 document.querySelectorAll('.modal .close-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
+  btn.addEventListener('click', function () {
     closeModal(this.closest('.modal').id);
   });
 });

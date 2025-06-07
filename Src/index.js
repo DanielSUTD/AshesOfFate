@@ -5,27 +5,17 @@ canvas.width = 1024
 canvas.height = 576
 
 
-//Armazena as Colisões
+//Armazena Pontos de Encontro do Jogo
 const collisionsMap = []
-for (let i = 0; i < collisions.length; i += 160) {
-    collisionsMap.push(collisions.slice(i, 160 + i))
-}
-//console.log("CollisionsMap:", collisionsMap);
-
-
-//Armazena as Batalhas
 const battleZonesMap = []
-for (let i = 0; i < battleZonesData.length; i += 160) {
-    battleZonesMap.push(battleZonesData.slice(i, 160 + i))
-}
-//console.log("battleZonesMap:", battleZonesMap);
-
-//Armazena os NPCS
 const charactersMap = []
-for (let i = 0; i < charactersMapData.length; i += 160) {
-    charactersMap.push(charactersMapData.slice(i, 160 + i))
-}
-//console.log("charactersMapData:", charactersMapData);
+const puzzlesMap = []
+
+//Armazena Objetos do Jogo
+const boundaries = []
+const battleZones = []
+const characters = []
+const puzzles = []
 
 //Posição Inicial
 const offset = {
@@ -33,9 +23,128 @@ const offset = {
     y: -2460
 }
 
+//NPCS
+const drayven = new Image()
+drayven.src = '/assets/Character/Drayven.png'
 
-//Armazena os objetos com os limites de Colisão
-const boundaries = []
+const oldman = new Image()
+oldman.src = '/assets/Character/OldMan.png'
+
+//Mapa
+const image = new Image()
+image.src = '/assets/Island/AshesOfFate.png'
+
+//Foreground
+const foregroundImage = new Image()
+foregroundImage.src = '/assets/Island/Foreground.png'
+
+//Zarien
+const playerDown = new Image()
+playerDown.src = '/assets/MainCharacter/Walk/WalkDown.png'
+const playerUp = new Image()
+playerUp.src = '/assets/MainCharacter/Walk/WalkUp.png'
+const playerLeft = new Image()
+playerLeft.src = '/assets/MainCharacter/Walk/WalkLeft.png'
+const playerRight = new Image()
+playerRight.src = '/assets/MainCharacter/Walk/WalkRight.png'
+const idleDown = new Image()
+idleDown.src = '/assets/MainCharacter/Idle/IdleDown.png'
+const idleUp = new Image()
+idleUp.src = '/assets/MainCharacter/Idle/IdleUp.png'
+const idleLeft = new Image()
+idleLeft.src = '/assets/MainCharacter/Idle/IdleLeft.png'
+const idleRight = new Image()
+idleRight.src = '/assets/MainCharacter/Idle/IdleRight.png'
+
+//Configurações da Imagem
+const SPRITE_WIDTH = 320
+const SPRITE_HEIGHT = 96
+const NUM_SPRITE = 4
+
+//Zarien
+const player = new Sprite({
+    position: {
+        x: canvas.width / 2 - SPRITE_WIDTH / NUM_SPRITE / 2,
+        y: canvas.height / 2 - SPRITE_HEIGHT / 2
+    },
+    image: idleLeft,
+    frames: {
+        max: 4,
+        hold: 10
+    },
+
+    sprites: {
+        down: playerDown,
+        up: playerUp,
+        left: playerLeft,
+        right: playerRight,
+        idleDown: idleDown,
+        idleUp: idleUp,
+        idleLeft: idleLeft,
+        idleRight: idleRight
+    }
+})
+
+//Mapa
+const background = new Sprite({
+    position: {
+        x: offset.x,
+        y: offset.y
+    },
+
+    image: image
+})
+
+//Foreground
+const foreground = new Sprite({
+    position: {
+        x: offset.x,
+        y: offset.y
+    },
+
+    image: foregroundImage
+})
+
+//Teclas do Jogo
+const keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
+
+//Colisões
+for (let i = 0; i < collisions.length; i += 160) {
+    collisionsMap.push(collisions.slice(i, 160 + i))
+}
+//console.log("CollisionsMap:", collisionsMap);
+
+//Batalhas
+for (let i = 0; i < battleZonesData.length; i += 160) {
+    battleZonesMap.push(battleZonesData.slice(i, 160 + i))
+}
+//console.log("battleZonesMap:", battleZonesMap);
+
+//NPCS
+for (let i = 0; i < charactersMapData.length; i += 160) {
+    charactersMap.push(charactersMapData.slice(i, 160 + i))
+}
+//console.log("charactersMapData:", charactersMapData);
+
+//Puzzles
+for (let i = 0; i < puzzlesMapData.length; i += 160) {
+    puzzlesMap.push(puzzlesMapData.slice(i, 160 + i))
+}
+//console.log("charactersMapData:", charactersMapData);
+
 
 //Responsável por criar os objetos de Colisão do Jogo
 // J = COLUNA, I = LINHA
@@ -55,9 +164,6 @@ collisionsMap.forEach((row, i) => {
 //console.log(boundaries);
 
 
-//Armazena os objetos com os limites de Batalha
-const battleZones = []
-
 //Responsável por criar os objetos de Batalha do Jogo
 // J = COLUNA, I = LINHA
 battleZonesMap.forEach((row, i) => {
@@ -74,17 +180,6 @@ battleZonesMap.forEach((row, i) => {
     })
 })
 //console.log(battleZones);
-
-
-//Armazena os objetos com os NPCS
-const characters = []
-
-//NPCS
-const drayven = new Image()
-drayven.src = '/assets/Character/Drayven.png'
-
-const oldman = new Image()
-oldman.src = '/assets/Character/OldMan.png'
 
 //Responsável por criar os objetos(NPCS)
 charactersMap.forEach((row, i) => {
@@ -141,61 +236,53 @@ charactersMap.forEach((row, i) => {
     })
 })
 
-//Mapa
-const image = new Image()
-image.src = '/assets/Island/AshesOfFate.png'
+//Responsável por criar os puzzles
+puzzlesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        //Morse Puzzle
+        if (symbol === 28496) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'morseModal',
+                    puzzleType: 'morse'
+                })
+            )
+        }
+    })
+});
+
+//Move
+const movables = [
+    background,
+    ...boundaries,
+    foreground,
+    ...battleZones,
+    ...characters,
+    ...puzzles
+]
+
+//Draw
+const renderables = [
+    background,
+    ...boundaries,
+    ...battleZones,
+    ...characters,
+    ...puzzles,
+    player,
+    foreground
+]
 
 
-//Zarien
-const playerDown = new Image()
-playerDown.src = '/assets/MainCharacter/Walk/WalkDown.png'
-const playerUp = new Image()
-playerUp.src = '/assets/MainCharacter/Walk/WalkUp.png'
-const playerLeft = new Image()
-playerLeft.src = '/assets/MainCharacter/Walk/WalkLeft.png'
-const playerRight = new Image()
-playerRight.src = '/assets/MainCharacter/Walk/WalkRight.png'
-const idleDown = new Image()
-idleDown.src = '/assets/MainCharacter/Idle/IdleDown.png'
-const idleUp = new Image()
-idleUp.src = '/assets/MainCharacter/Idle/IdleUp.png'
-const idleLeft = new Image()
-idleLeft.src = '/assets/MainCharacter/Idle/IdleLeft.png'
-const idleRight = new Image()
-idleRight.src = '/assets/MainCharacter/Idle/IdleRight.png'
+let lastKey = ''
 
-//Foreground
-const foregroundImage = new Image()
-foregroundImage.src = '/assets/Island/Foreground.png'
 
-//Configurações da Imagem
-const SPRITE_WIDTH = 320
-const SPRITE_HEIGHT = 96
-const NUM_SPRITE = 4
-
-//Zarien
-const player = new Sprite({
-    position: {
-        x: canvas.width / 2 - SPRITE_WIDTH / NUM_SPRITE / 2,
-        y: canvas.height / 2 - SPRITE_HEIGHT / 2
-    },
-    image: idleLeft,
-    frames: {
-        max: 4,
-        hold: 10
-    },
-
-    sprites: {
-        down: playerDown,
-        up: playerUp,
-        left: playerLeft,
-        right: playerRight,
-        idleDown: idleDown,
-        idleUp: idleUp,
-        idleLeft: idleLeft,
-        idleRight: idleRight
-    }
-})
+const battle = {
+    initiated: false
+}
 
 //Hitbox
 function getPlayerHitbox(offsetX, offsetY) {
@@ -209,72 +296,11 @@ function getPlayerHitbox(offsetX, offsetY) {
     };
 }
 
-//Mapa
-const background = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
 
-    image: image
-})
-
-//Foreground
-const foreground = new Sprite({
-    position: {
-        x: offset.x,
-        y: offset.y
-    },
-
-    image: foregroundImage
-})
-
-//Teclas do Jogo
-const keys = {
-    w: {
-        pressed: false
-    },
-    a: {
-        pressed: false
-    },
-    s: {
-        pressed: false
-    },
-    d: {
-        pressed: false
-    }
-}
-
-//Itens que vão mover no meu Mapa
-const movables = [
-    background,
-    ...boundaries,
-    foreground,
-    ...battleZones,
-    ...characters
-]
-
-//Itens que vão renderizar no meu Mapa
-const renderables = [
-    background,
-    ...boundaries,
-    ...battleZones,
-    ...characters,
-    player,
-    foreground
-]
-
-//Última Tecla
-let lastKey = ''
-
-//Detecta uma Batalha
-const battle = {
-    initiated: false
-}
 
 //Responsável pelo Jogo
 function animate() {
-    const animationId = window.requestAnimationFrame(animate)
+    animationId = window.requestAnimationFrame(animate)
 
     renderables.forEach((renderable) => {
         renderable.draw()
@@ -283,14 +309,14 @@ function animate() {
     let moving = true
     player.animate = false
 
-    // Desenhar a HITBOX do Player
-    /*
-    const hitbox = getPlayerHitbox(20, 20);
-    c.fillStyle = 'rgba(0, 255, 0, 0.3)';
-    c.fillRect(hitbox.position.x, hitbox.position.y, hitbox.width, hitbox.height);
-    */
-
+    
     if (battle.initiated) return
+
+    checkForPuzzleCollision({
+        puzzles,
+        player,
+        puzzleOffset: { x: 0, y: 0 }
+    });
 
     //Ativar uma Batalha
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
@@ -361,13 +387,19 @@ function animate() {
         player.animate = true
         player.image = player.sprites.up
 
-        
+
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 0, y: 3 }
         })
-        
+
+        checkForPuzzleCollision({
+            puzzles,
+            player,
+            puzzleOffset: { x: 0, y: 3 }
+        })
+
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
@@ -399,15 +431,21 @@ function animate() {
         player.animate = true
         player.image = player.sprites.left
 
-        
+
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 3, y: 0 }
         })
-        
 
-        // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
+        checkForPuzzleCollision({
+            puzzles,
+            player,
+            puzzleOffset: { x: 3, y: 0 }
+        })
+
+
+        //Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (
@@ -437,13 +475,19 @@ function animate() {
         player.animate = true
         player.image = player.sprites.down
 
-        
+
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: 0, y: -3 }
         })
-        
+
+        checkForPuzzleCollision({
+            puzzles,
+            player,
+            puzzleOffset: { x: 0, y: -3 }
+        })
+
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
         for (let i = 0; i < boundaries.length; i++) {
@@ -474,13 +518,18 @@ function animate() {
         player.animate = true
         player.image = player.sprites.right
 
-        
+
         checkForCharacterCollision({
             characters,
             player,
             characterOffset: { x: -3, y: 0 }
         })
-        
+
+        checkForPuzzleCollision({
+            puzzles,
+            player,
+            puzzleOffset: { x: -3, y: 0 }
+        })
 
 
         // Capturando as colisões(Após dois retângulos colidirem, não deixa o personagem avançar)
@@ -529,59 +578,88 @@ function animate() {
 }
 
 window.addEventListener('keydown', (e) => {
-  if (player.isInteracting) {
-    switch (e.key) {
-      case ' ':
-        player.interactionAsset.dialogueIndex++
+    // Se o jogador está interagindo com um NPC
+    if (player.isInteracting) {
+        switch (e.key) {
+            case ' ':
+                // Avança o diálogo
+                player.interactionAsset.dialogueIndex++
 
-        const { dialogueIndex, dialogue } = player.interactionAsset
-        if (dialogueIndex <= dialogue.length - 1) {
-          document.querySelector('#characterDialogueBox').innerHTML =
-            player.interactionAsset.dialogue[dialogueIndex]
-          return
+                const { dialogueIndex, dialogue } = player.interactionAsset
+
+                if (dialogueIndex <= dialogue.length - 1) {
+                    document.querySelector('#characterDialogueBox').innerHTML =
+                        dialogue[dialogueIndex]
+                    return
+                }
+
+                // Finaliza o diálogo
+                player.isInteracting = false
+                player.interactionAsset.dialogueIndex = 0
+                document.querySelector('#characterDialogueBox').style.display = 'none'
+                break
         }
-
-        // finish conversation
-        player.isInteracting = false
-        player.interactionAsset.dialogueIndex = 0
-        document.querySelector('#characterDialogueBox').style.display = 'none'
-
-        break
+        return
     }
-    return
-  }
 
-  switch (e.key) {
-    case ' ':
-      if (!player.interactionAsset) return
+    if (e.key === 'e') {
+        //Distância do puzzle
+        if (player.currentPuzzle && player.nearPuzzle) {
+            const distance = Math.sqrt(
+                Math.pow(player.position.x - player.currentPuzzle.position.x, 2) +
+                Math.pow(player.position.y - player.currentPuzzle.position.y, 2)
+            );
+            
+            
+            if (distance < 100) { 
+                console.log("Abrindo puzzle:", player.currentPuzzle.modalId);
+                openPuzzle(player.currentPuzzle.modalId);
+            } else {
+                player.nearPuzzle = false;
+                player.currentPuzzle = null;
+            }
+        }
+    }
 
-      //Começo do diálogo
-      const firstMessage = player.interactionAsset.dialogue[0]
-      document.querySelector('#characterDialogueBox').innerHTML = firstMessage
-      document.querySelector('#characterDialogueBox').style.display = 'flex'
-      player.isInteracting = true
-      break
-      
-    case 'w':
-      keys.w.pressed = true
-      lastKey = 'w'
-      break
+    switch (e.key) {
+        case 'e':
+            console.log('TECLA E APERTADA')
+            if (player.nearPuzzle && player.currentPuzzle && !player.isInteracting) {
+                console.log("Abrindo puzzle:", player.currentPuzzle.modalId);
+                openPuzzle(player.currentPuzzle.modalId);
+            }
+            break;
 
-    case 'a':
-      keys.a.pressed = true
-      lastKey = 'a'
-      break
+        case ' ':
+            // Começar o diálogo com NPC
+            if (!player.interactionAsset) return
 
-    case 's':
-      keys.s.pressed = true
-      lastKey = 's'
-      break
+            const firstMessage = player.interactionAsset.dialogue[0]
+            document.querySelector('#characterDialogueBox').innerHTML = firstMessage
+            document.querySelector('#characterDialogueBox').style.display = 'flex'
+            player.isInteracting = true
+            break
 
-    case 'd':
-      keys.d.pressed = true
-      lastKey = 'd'
-      break
-  }
+        case 'w':
+            keys.w.pressed = true
+            lastKey = 'w'
+            break
+
+        case 'a':
+            keys.a.pressed = true
+            lastKey = 'a'
+            break
+
+        case 's':
+            keys.s.pressed = true
+            lastKey = 's'
+            break
+
+        case 'd':
+            keys.d.pressed = true
+            lastKey = 'd'
+            break
+    }
 })
 
 window.addEventListener('keyup', (e) => {

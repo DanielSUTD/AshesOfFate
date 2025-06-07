@@ -37,3 +37,35 @@ function checkForCharacterCollision({
     }
   }
 }
+
+function checkForPuzzleCollision({ puzzles, player, puzzleOffset = {x: 0, y: 0} }) {
+    let colliding = false;
+    
+    for (let i = 0; i < puzzles.length; i++) {
+        const puzzle = puzzles[i];
+        if (
+            rectangularCollision({
+                rectangle1: getPlayerHitbox(20, 20),
+                rectangle2: {
+                    ...puzzle,
+                    position: {
+                        x: puzzle.position.x + puzzleOffset.x,
+                        y: puzzle.position.y + puzzleOffset.y
+                    }
+                }
+            })
+        ) {
+            colliding = true;
+            player.nearPuzzle = true;
+            player.currentPuzzle = puzzle;
+            break;
+        }
+    }
+    
+    
+    if (!colliding) {
+        player.nearPuzzle = false;
+        player.currentPuzzle = null;
+    }
+}
+
