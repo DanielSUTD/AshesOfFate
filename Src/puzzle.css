@@ -1,0 +1,41 @@
+/* Estilos para o puzzle musical */
+.note-buttons-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.note-button {
+  padding: 0.5rem;
+  background-color: #4a4a4a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.6rem;
+  transition: background-color 0.2s;
+}
+
+.note-button:hover {
+  background-color: #666;
+}
+
+.user-sequence-container {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 2rem;
+  margin-bottom: 1rem;
+}
+
+.user-note {
+  padding: 0.5rem;
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.6rem;
+}
