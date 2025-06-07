@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <div class="canvas-container">
+  <class class="canvas-container">
 
     <!-- Menu do Jogo -->
     <!--
@@ -85,50 +85,62 @@
     </div>
 
     <!-- Modal do Puzzle Binário -->
-    <!-- <div id="binaryModal" class="modal">
+    <div id="binaryModal" class="modal">
       <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Puzzle: Traduza o Código</h2>
-        <p id="binary-code">01001000 01100101 01101100 01101100 01101111</p>
-        <input type="text" id="binary-answer" placeholder="Palavra Secreta" />
-        <button id="submit-answer">Verificar</button>
-        <p id="feedback" style="margin-top: 0.5rem;font-size: 0.6rem;"></p>
+        <span class="close-btn" onclick="closeModal('binaryModal')">&times;</span>
+        <h2>Traduza o Código</h2>
+        <p id="binaryCode">01001000 01100101 01101100 01101100 01101111</p>
+        <input type="text" id="binaryAnswer" placeholder="Palavra Secreta" />
+        <button onclick="verifyBinary()">Verificar</button>
+        <p id="binaryFeedback" class="feedback"></p>
       </div>
     </div>
-    <button onclick="openBinaryPuzzle()" style="position: fixed; bottom: 1rem; right: 1rem; z-index: 101;">
-      Testar Puzzle
-    </button> -->
 
     <!-- Modal do Puzzle Morse -->
     <div id="morseModal" class="modal">
       <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Puzzle: Decifre o Código</h2>
-        <p id="morse-code">-.. . ... - .. -. ---</p>
-        <input type="text" id="morse-answer" placeholder="Palavra Secreta" />
-        <button id="submit-answer">Verificar</button>
-        <p id="feedback" style="margin-top: 0.5rem;font-size: 0.6rem;"></p>
+        <span class="close-btn" onclick="closeModal('morseModal')">&times;</span>
+        <h2>Decifre o Código</h2>
+        <p id="morseCode">-.. . ... - .. -. ---</p>
+        <input type="text" id="morseAnswer" placeholder="Palavra Secreta" />
+        <button onclick="verifyMorse()">Verificar</button>
+        <p id="morseFeedback" class="feedback"></p>
       </div>
     </div>
-    <!-- <button onclick="openMorsePuzzle()" style="position: fixed; bottom: 1rem; right: 1rem; z-index: 101;">
-      Testar Puzzle
-    </button> -->
 
     <!-- Modal do Puzzle Musical -->
     <div id="musicModal" class="modal">
       <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Puzzle: Repita a Melodia</h2>
-        <button id="playSequence" style="margin-bottom: 1rem;">▶️ Tocar Sequência</button>
-        <div id="noteButtons" class="note-buttons-container">
-          <!-- Botões das notas serão gerados aqui -->
-        </div>
+        <span class="close-btn" onclick="closeModal('musicModal')">&times;</span>
+        <h2>Repita a Melodia</h2>
+        <button id="playSequence">▶️ Tocar Sequência</button>
+        <div id="noteButtons" class="note-buttons-container"></div>
         <div id="userSequence" class="user-sequence-container"></div>
         <button id="checkSequence" disabled>Verificar</button>
-        <p id="musicFeedback" style="margin-top: 0.5rem; font-size: 0.6rem;"></p>
+        <p id="musicFeedback" class="feedback"></p>
       </div>
     </div>
 
+    <!-- Modal do Puzzle das Ilhas -->
+    <div id="islandModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('islandModal')">&times;</span>
+        <h2>O Que Eles São em Comum?</h2>
+        <img src="../assets/Puzzle/puzzle-map.png" alt="Mapa com X em países-ilhas" class="puzzle-image">
+        <input type="text" id="islandAnswer" placeholder="Digite a resposta...">
+        <button id="submitIsland">Verificar</button>
+        <p id="islandFeedback" class="feedback"></p>
+      </div>
+    </div>
+
+    <!-- Botões de Teste -->
+    <div class="test-buttons">
+      <button onclick="openPuzzle('binaryModal')">Testar Binário</button>
+      <button onclick="openPuzzle('morseModal')">Testar Morse</button>
+      <button onclick="openPuzzle('musicModal')">Testar Musical</button>
+      <button onclick="openPuzzle('islandModal')">Testar Ilhas</button>
+    </div>
+    </class>
   </div>
 
   <!-- Scripts -->
@@ -152,7 +164,7 @@
   <script src="/src/util.js"></script>
   <script src="/src/script.js"></script>
   <script src="/src/battleScene.js"></script>
-  <script src="/Src/puzzle.js"></script>
+  <script src="/src/puzzle.js"></script>
 </body>
 
 </html>

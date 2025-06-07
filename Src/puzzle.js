@@ -1,137 +1,102 @@
-/* Modal do puzzle binário */
-// const modal = document.getElementById("binaryModal");
-//   const closeBtn = document.querySelector(".close-btn");
-//   const submitBtn = document.getElementById("submit-answer");
-//   const feedback = document.getElementById("feedback");
-
-//   function openBinaryPuzzle() {
-//     modal.style.display = "block";
-//     document.getElementById("binary-answer").value = "";
-//     feedback.textContent = "";
-//   }
-
-//   closeBtn.onclick = function () {
-//     modal.style.display = "none";
-//   };
-
-//   window.onclick = function (event) {
-//     if (event.target === modal) {
-//       modal.style.display = "none";
-//     }
-//   };
-
-//   submitBtn.onclick = function () {
-//     const answer = document.getElementById("binary-answer").value.trim().toLowerCase();
-//     if (answer === "hello") {
-//       feedback.style.color = "darkgreen";
-//       feedback.textContent = "✔️ Resposta correta!";
-//       setTimeout(() => modal.style.display = "none", 1500);
-//     } else {
-//       feedback.style.color = "darkred";
-//       feedback.textContent = "❌ Tente novamente.";
-//     }
-//   };
-
 // Variável global para controle de modais
 let isModalOpen = false;
 
-/* Modal do puzzle Morse */
-const morseModal = document.getElementById("morseModal");
-const morseCloseBtn = document.querySelector("#morseModal .close-btn");
-const morseSubmitBtn = document.getElementById("submit-answer");
-const morseFeedback = document.getElementById("feedback");
-
-function openMorsePuzzle() {
-  morseModal.style.display = "block";
+// Funções gerais
+function openPuzzle(modalId) {
+  document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
-  document.getElementById("morse-answer").value = "";
-  morseFeedback.textContent = "";
-  document.getElementById("morse-answer").focus();
+
+  if (modalId === 'musicModal') {
+    initNoteButtons();
+    userSequence = [];
+    document.getElementById('checkSequence').disabled = true;
+    document.getElementById('musicFeedback').textContent = "";
+  }
 }
 
-morseCloseBtn.onclick = function() {
-  morseModal.style.display = "none";
+function closeModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
   isModalOpen = false;
-};
+}
 
-window.addEventListener('click', function(event) {
-  if (event.target === morseModal) {
-    morseModal.style.display = "none";
-    isModalOpen = false;
+// Puzzle Binário
+function verifyBinary() {
+  const answer = document.getElementById("binaryAnswer").value.trim().toLowerCase();
+  const feedback = document.getElementById("binaryFeedback");
+  
+  if (answer === "hello") {
+    feedback.style.color = "#4CAF50";
+    feedback.textContent = "✔️ Resposta correta!";
+    setTimeout(() => closeModal('binaryModal'), 1500);
+  } else {
+    feedback.style.color = "#f44336";
+    feedback.textContent = "❌ Tente novamente.";
   }
+}
+
+// Puzzle Morse
+function verifyMorse() {
+  const answer = document.getElementById("morseAnswer").value.trim().toUpperCase();
+  const feedback = document.getElementById("morseFeedback");
+  
+  if (answer === "DESTINO") {
+    feedback.style.color = "#4CAF50";
+    feedback.textContent = "✔️ Resposta correta!";
+    setTimeout(() => closeModal('morseModal'), 1500);
+  } else {
+    feedback.style.color = "#f44336";
+    feedback.textContent = "❌ Tente novamente.";
+  }
+}
+
+// Puzzle Musical
+const sequenceSound = new Howl({
+  src: ['../audio/puzzle-music.mp4'],
+  html5: true,
+  pool: 1
 });
 
-morseSubmitBtn.onclick = function() {
-  const answer = document.getElementById("morse-answer").value.trim().toUpperCase();
-  if (answer === "DESTINO") {
-    morseFeedback.style.color = "darkgreen";
-    morseFeedback.textContent = "✔️ Resposta correta!";
-    setTimeout(() => {
-      morseModal.style.display = "none";
-      isModalOpen = false;
-    }, 1500);
-  } else {
-    morseFeedback.style.color = "darkred";
-    morseFeedback.textContent = "❌ Tente novamente.";
-  }
-};
-
-const musicModal = document.getElementById("musicModal");
-const playSequenceBtn = document.getElementById("playSequence");
-const noteButtonsContainer = document.getElementById("noteButtons");
-const userSequenceContainer = document.getElementById("userSequence");
-const checkSequenceBtn = document.getElementById("checkSequence");
-const musicFeedback = document.getElementById("musicFeedback");
-
-// Sequência correta
 const correctSequence = ['Dó', 'Ré', 'Fá', 'Sol', 'Mi', 'Dó', 'Lá', 'Si'];
 let userSequence = [];
 let isPlaying = false;
 
-const sequenceSound = new Howl({
-  src: ['../audio/puzzle-music.mp4'],
-  html5: true,
-  pool: 1,
-  onloaderror: function() {
-    console.error('Erro ao carregar o áudio');
-    musicFeedback.style.color = "darkred";
-    musicFeedback.textContent = "Erro: Áudio não carregado";
-  }
-});
+document.getElementById('playSequence').addEventListener('click', playCorrectSequence);
+document.getElementById('checkSequence').addEventListener('click', checkUserSequence);
 
 function initNoteButtons() {
-  noteButtonsContainer.innerHTML = '';
   const notes = ['Dó', 'Ré', 'Mi', 'Fá', 'Sol', 'Lá', 'Si'];
+  const container = document.getElementById('noteButtons');
+  container.innerHTML = '';
   
   notes.forEach(note => {
     const button = document.createElement('button');
     button.textContent = note;
     button.classList.add('note-button');
     button.addEventListener('click', () => addNoteToSequence(note));
-    noteButtonsContainer.appendChild(button);
+    container.appendChild(button);
   });
 }
 
 function addNoteToSequence(note) {
-  if (isModalOpen && !isPlaying && userSequence.length < correctSequence.length) {
+  if (userSequence.length < correctSequence.length) {
     userSequence.push(note);
     updateUserSequenceDisplay();
-    checkSequenceBtn.disabled = userSequence.length !== correctSequence.length;
+    document.getElementById('checkSequence').disabled = userSequence.length !== correctSequence.length;
   }
 }
 
 function updateUserSequenceDisplay() {
-  userSequenceContainer.innerHTML = '';
+  const container = document.getElementById('userSequence');
+  container.innerHTML = '';
+  
   userSequence.forEach((note, index) => {
     const noteElement = document.createElement('div');
     noteElement.textContent = note;
     noteElement.classList.add('user-note');
-    
     if (note !== correctSequence[index]) {
       noteElement.style.backgroundColor = '#ff6b6b';
     }
-    
-    userSequenceContainer.appendChild(noteElement);
+    container.appendChild(noteElement);
   });
 }
 
@@ -139,86 +104,77 @@ function playCorrectSequence() {
   if (isPlaying) return;
   
   isPlaying = true;
-  musicFeedback.textContent = "Tocando sequência...";
-  sequenceSound.stop();
+  const feedback = document.getElementById('musicFeedback');
+  feedback.textContent = "Tocando sequência...";
   
   sequenceSound.once('end', () => {
     isPlaying = false;
-    musicFeedback.textContent = "Repita a sequência";
+    feedback.textContent = "Repita a sequência";
   });
   
   sequenceSound.play();
 }
 
 function checkUserSequence() {
+  const feedback = document.getElementById('musicFeedback');
+  
   if (userSequence.length !== correctSequence.length) {
-    musicFeedback.style.color = "darkred";
-    musicFeedback.textContent = "❌ Sequência incompleta. Você precisa adicionar " + correctSequence.length + " notas.";
+    feedback.style.color = "#f44336";
+    feedback.textContent = `❌ Sequência incompleta. Adicione mais ${correctSequence.length - userSequence.length} notas.`;
     return;
   }
 
-  let allCorrect = true;
-  userSequence.forEach((note, index) => {
-    if (note !== correctSequence[index]) {
-      allCorrect = false;
-    }
-  });
-
-  if (allCorrect) {
-    musicFeedback.style.color = "darkgreen";
-    musicFeedback.textContent = "✔️ Sequência correta! Parabéns!";
-    setTimeout(() => {
-      musicModal.style.display = "none";
-      isModalOpen = false;
-      resetUserSequence();
-    }, 1500);
+  const isCorrect = userSequence.every((note, i) => note === correctSequence[i]);
+  
+  if (isCorrect) {
+    feedback.style.color = "#4CAF50";
+    feedback.textContent = "✔️ Sequência correta!";
+    setTimeout(() => closeModal('musicModal'), 1500);
   } else {
-    musicFeedback.style.color = "darkred";
-    musicFeedback.textContent = "❌ Sequência incorreta. Limpando e tocaremos a sequência novamente...";
-
+    feedback.style.color = "#f44336";
+    feedback.textContent = "❌ Sequência incorreta. Tente novamente.";
     setTimeout(() => {
-      resetUserSequence();
+      userSequence = [];
+      updateUserSequenceDisplay();
+      document.getElementById('checkSequence').disabled = true;
     }, 2000);
   }
 }
 
-function resetUserSequence() {
-  userSequence = [];
-  updateUserSequenceDisplay();
-  checkSequenceBtn.disabled = true;
+// Puzzle das Ilhas
+document.getElementById('submitIsland').addEventListener('click', verifyIsland);
+
+function verifyIsland() {
+  const answer = document.getElementById("islandAnswer").value.trim().toLowerCase();
+  const feedback = document.getElementById("islandFeedback");
+  
+  if (answer === "ilha" || answer === "ilhas") {
+    feedback.style.color = "#4CAF50";
+    feedback.textContent = "✔️ Correto! Todos são países-ilhas!";
+    setTimeout(() => closeModal('islandModal'), 1500);
+  } else {
+    feedback.style.color = "#f44336";
+    feedback.textContent = "❌ Tente novamente. Pense em geografia...";
+  }
 }
 
-
-function resetUserSequence() {
-  userSequence = [];
-  updateUserSequenceDisplay();
-  checkSequenceBtn.disabled = true;
-}
-
-playSequenceBtn.addEventListener('click', playCorrectSequence);
-checkSequenceBtn.addEventListener('click', checkUserSequence);
-
-document.querySelector('#musicModal .close-btn').addEventListener('click', () => {
-  musicModal.style.display = "none";
-  isModalOpen = false;
+// Inicialização
+document.querySelectorAll('.modal .close-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    closeModal(this.closest('.modal').id);
+  });
 });
 
 window.addEventListener('click', (event) => {
-  if (event.target === musicModal) {
-    musicModal.style.display = "none";
-    isModalOpen = false;
+  if (event.target.classList.contains('modal')) {
+    closeModal(event.target.id);
   }
 });
 
-function openMusicPuzzle() {
-  musicModal.style.display = "block";
-  isModalOpen = true;
-  resetUserSequence();
-  musicFeedback.textContent = "";
+// Inicializa o puzzle musical quando o modal abre
+document.getElementById('musicModal').addEventListener('shown', () => {
   initNoteButtons();
-  sequenceSound.load();
-}
-
-document.body.insertAdjacentHTML('beforeend', 
-  '<button onclick="openMusicPuzzle()" style="position: fixed; bottom: 4rem; right: 1rem; z-index: 101;">Testar Puzzle Musical</button>'
-);
+  userSequence = [];
+  document.getElementById('checkSequence').disabled = true;
+  document.getElementById('musicFeedback').textContent = "";
+});

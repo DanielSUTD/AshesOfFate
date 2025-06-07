@@ -1,10 +1,93 @@
-/* Estilos para o puzzle musical */
+/* Estilos Gerais para Todos os Modais */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  background-image: url('../img/modal.png');
+  background-size: 100% 100%;
+  margin: 5% auto;
+  padding: 50px;
+  width: 80%;
+  max-width: 950px;
+  min-height: 650px;
+  color: #3a2c1a;
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Elementos Comuns */
+.close-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-top: 150px;
+}
+
+.modal-content input {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid #5e3a1a;
+  padding: 10px;
+  width: 70%;
+  margin: 15px 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+}
+
+.modal-content button {
+  background: #5e3a1a;
+  color: #f0e6d2;
+  border: none;
+  padding: 12px 25px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin: 10px 5px;
+}
+
+.feedback {
+  margin-top: 15px;
+  min-height: 20px;
+  font-size: 0.8rem;
+}
+
+/* Estilos Específicos */
+.puzzle-image {
+  max-width: 100%;
+  max-height: 300px;
+}
+
+#binaryCode,
+#morseCode {
+  margin-top: 40px;
+}
+
+/* Puzzle Musical */
 .note-buttons-container {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .note-button {
@@ -14,13 +97,6 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-family: "Press Start 2P", cursive;
-  font-size: 0.6rem;
-  transition: background-color 0.2s;
-}
-
-.note-button:hover {
-  background-color: #666;
 }
 
 .user-sequence-container {
@@ -29,7 +105,7 @@
   flex-wrap: wrap;
   justify-content: center;
   min-height: 2rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .user-note {
@@ -37,5 +113,20 @@
   background-color: #2c3e50;
   color: white;
   border-radius: 4px;
-  font-size: 0.6rem;
+}
+
+/* Botões de Teste*/
+.test-buttons {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.test-buttons button {
+  padding: 8px 12px;
+  font-size: 0.7rem;
 }
