@@ -19,18 +19,23 @@ function closeModal(modalId) {
   isModalOpen = false;
 }
 
+function showFeedback(element, message, color = "#000", duration = 3000) {
+  element.style.color = color;
+  element.textContent = message;
+  setTimeout(() => {
+    element.textContent = "";
+  }, duration);
+}
 // Puzzle Binário
 function verifyBinary() {
   const answer = document.getElementById("binaryAnswer").value.trim().toLowerCase();
   const feedback = document.getElementById("binaryFeedback");
   
   if (answer === "vida") {
-    feedback.style.color = "#265c28";
-    feedback.textContent = "Resposta correta!";
+    showFeedback(feedback, "Resposta correta!", "#265c28");
     setTimeout(() => closeModal('binaryModal'), 1500);
   } else {
-    feedback.style.color = "#891616";
-    feedback.textContent = "Tente novamente.";
+    showFeedback(feedback, "Tente novamente.", "#891616");
   }
 }
 
@@ -40,12 +45,10 @@ function verifyMorse() {
   const feedback = document.getElementById("morseFeedback");
   
   if (answer === "DESTINO") {
-    feedback.style.color = "#265c28";
-    feedback.textContent = "Resposta correta!";
+    showFeedback(feedback, "Resposta correta!", "#265c28");
     setTimeout(() => closeModal('morseModal'), 1500);
   } else {
-    feedback.style.color = "#891616";
-    feedback.textContent = "Tente novamente.";
+    showFeedback(feedback, "Tente novamente.", "#891616");
   }
 }
 
@@ -119,20 +122,18 @@ function checkUserSequence() {
   const feedback = document.getElementById('musicFeedback');
   
   if (userSequence.length !== correctSequence.length) {
-    feedback.style.color = "#891616";
-    feedback.textContent = `Sequência incompleta. Adicione mais ${correctSequence.length - userSequence.length} notas.`;
+    const remaining = correctSequence.length - userSequence.length;
+    showFeedback(feedback, `Sequência incompleta. Faltam ${remaining} nota(s).`, "#891616");
     return;
   }
 
   const isCorrect = userSequence.every((note, i) => note === correctSequence[i]);
   
   if (isCorrect) {
-    feedback.style.color = "#265c28";
-    feedback.textContent = "Sequência correta!";
+    showFeedback(feedback, "Sequência correta!", "#265c28");
     setTimeout(() => closeModal('musicModal'), 1500);
   } else {
-    feedback.style.color = "#891616";
-    feedback.textContent = "Sequência incorreta. Tente novamente.";
+    showFeedback(feedback, "Sequência incorreta. Tente novamente.", "#891616");
     setTimeout(() => {
       userSequence = [];
       updateUserSequenceDisplay();
@@ -149,12 +150,10 @@ function verifyIsland() {
   const feedback = document.getElementById("islandFeedback");
   
   if (answer === "ilha" || answer === "ilhas") {
-    feedback.style.color = "#265c28";
-    feedback.textContent = "Correto! Todos são países-ilhas!";
+    showFeedback(feedback, "Correto! Todos são países-ilhas!", "#265c28");
     setTimeout(() => closeModal('islandModal'), 1500);
   } else {
-    feedback.style.color = "#891616";
-    feedback.textContent = "Tente novamente. Pense em geografia...";
+    showFeedback(feedback, "Tente novamente. Pense em geografia...", "#891616");
   }
 }
 
