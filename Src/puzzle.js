@@ -177,3 +177,126 @@ document.getElementById('musicModal').addEventListener('shown', () => {
   document.getElementById('checkSequence').disabled = true;
   document.getElementById('musicFeedback').textContent = "";
 });
+
+// Puzzle Lunar
+const moonPhases = [
+  { phase: "Nova", emoji: "🌑", date: "2025-01-20" },
+  { phase: "Crescente Inicial", emoji: "🌒", date: "2025-02-10" },
+  { phase: "Quarto Crescente", emoji: "🌓", date: "2025-03-23" },
+  { phase: "Cheia", emoji: "🌕", date: "2025-04-30" },
+  { phase: "Quarto Minguante", emoji: "🌗", date: "2025-06-07" }
+];
+
+let selectedMoons = [];
+let moonOptions = [];
+
+function initMoonPuzzle() {
+  const moonOptionsContainer = document.getElementById('moonOptions');
+  const moonSlotsContainer = document.getElementById('moonSlots');
+  
+  moonOptionsContainer.innerHTML = '';
+  moonSlotsContainer.innerHTML = '';
+  selectedMoons = Array(moonPhases.length).fill(null);
+  
+  moonOptions = [...moonPhases].sort(() => Math.random() - 0.5);
+  
+  moonOptions.forEach((moon, index) => {
+    const button = document.createElement('button');
+    button.innerHTML = moon.emoji;
+    button.title = moon.phase;
+    button.dataset.index = index;
+    button.addEventListener('click', () => selectMoonPhase(moon));
+    moonOptionsContainer.appendChild(button);
+  });
+  
+  for (let i = 0; i < moonPhases.length; i++) {
+  const slot = document.createElement('div');
+  slot.dataset.index = i;
+  slot.innerHTML = '?'; // <-- Aqui
+  slot.addEventListener('click', () => removeMoonFromSlot(i));
+  moonSlotsContainer.appendChild(slot);
+}
+  
+  document.getElementById('verifyMoonSequence').addEventListener('click', verifyMoonSequence);
+  document.getElementById('moonFeedback').textContent = "";
+}
+
+function selectMoonPhase(moon) {
+  const slots = document.querySelectorAll('#moonSlots div');
+  for (let i = 0; i < slots.length; i++) {
+    if (slots[i].textContent === '?') {
+      slots[i].innerHTML = moon.emoji;
+      slots[i].title = moon.phase;
+      selectedMoons[i] = moon;
+      break;
+    }
+  }
+}
+
+function removeMoonFromSlot(index) {
+  const slot = document.querySelector(`#moonSlots div[data-index="${index}"]`);
+  if (slot.textContent !== '?') {
+    selectedMoons[index] = null;
+    slot.innerHTML = '?';
+    slot.title = '';
+  }
+}
+
+function verifyMoonSequence() {
+  const feedback = document.getElementById('moonFeedback');
+  
+  if (selectedMoons.length !== moonPhases.length || selectedMoons.some(m => !m)) {
+    showFeedback(feedback, "Preencha todos os slots com as fases da lua!", "#891616");
+    return;
+  }
+  
+  const isCorrect = selectedMoons.every((moon, index) => {
+    return moon.date === moonPhases[index].date;
+  });
+  
+  if (isCorrect) {
+    showFeedback(feedback, "Sequência correta! Você ordenou as fases da lua pelas datas corretamente!", "#265c28");
+    setTimeout(() => closeModal('moonModal'), 1500);
+    
+    const slots = document.querySelectorAll('#moonSlots div');
+    slots.forEach(slot => {
+      slot.style.backgroundColor = "#4caf50";
+      slot.style.border = "2px solid #2e7d32";
+    });
+  } else {
+    showFeedback(feedback, "Sequência incorreta. Tente novamente!", "#891616");
+    
+    const slots = document.querySelectorAll('#moonSlots div');
+    selectedMoons.forEach((moon, index) => {
+      if (moon.date !== moonPhases[index].date) {
+        slots[index].style.backgroundColor = "#ffebee";
+        slots[index].style.border = "2px solid #c62828";
+      }
+    });
+    
+    setTimeout(() => {
+    slots.forEach((slot, index) => {
+      slot.innerHTML = '?';
+      slot.title = '';
+      slot.style.backgroundColor = '';
+      slot.style.border = "2px dashed #555";
+    });
+    selectedMoons = Array(moonPhases.length).fill(null);
+  }, 2000);
+  }
+}
+
+function openPuzzle(modalId) {
+  document.getElementById(modalId).style.display = 'block';
+  isModalOpen = true;
+
+  if (modalId === 'musicModal') {
+    initNoteButtons();
+    userSequence = [];
+    document.getElementById('checkSequence').disabled = true;
+    document.getElementById('musicFeedback').textContent = "";
+  } else if (modalId === 'moonModal') {
+    initMoonPuzzle();
+    document.getElementById('moonFeedback').textContent = "";
+  }
+}

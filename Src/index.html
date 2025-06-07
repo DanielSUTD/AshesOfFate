@@ -133,14 +133,48 @@
       </div>
     </div>
 
+    <!-- Modal do Puzzle Lunar -->
+    <div id="moonModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('moonModal')">&times;</span>
+        <h2>Ordene as Fases da Lua</h2>
+
+        <div class="moon-dates">
+          <div class="date-row">
+            <div class="date-item" data-date="2025-01-20">20/01/2025</div>
+            <div class="date-item" data-date="2025-02-10">10/02/2025</div>
+            <div class="date-item" data-date="2025-03-23">23/03/2025</div>
+          </div>
+          <div class="date-row">
+            <div class="date-item" data-date="2025-04-30">30/04/2025</div>
+            <div class="date-item" data-date="2025-06-07">07/06/2025</div>
+          </div>
+        </div>
+
+        <div class="moon-options" id="moonOptions"></div>
+
+        <div class="moon-slots" id="moonSlots">
+          <div>?</div>
+          <div>?</div>
+          <div>?</div>
+          <div>?</div>
+          <div>?</div>
+        </div>
+
+        <button id="verifyMoonSequence">Verificar</button>
+        <p id="moonFeedback" class="feedback"></p>
+      </div>
+    </div>
+
     <!-- Botões de Teste -->
     <div class="test-buttons">
       <button onclick="openPuzzle('binaryModal')">Testar Binário</button>
       <button onclick="openPuzzle('morseModal')">Testar Morse</button>
       <button onclick="openPuzzle('musicModal')">Testar Musical</button>
       <button onclick="openPuzzle('islandModal')">Testar Ilhas</button>
+      <button onclick="openPuzzle('moonModal')">Testar Lunar</button>
     </div>
-    </class>
+  </class>
   </div>
 
   <!-- Scripts -->
