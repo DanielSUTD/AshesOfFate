@@ -16,7 +16,6 @@ function checkForCharacterCollision({
   characterOffset = { x: 0, y: 0 }
 }) {
   player.interactionAsset = null
-  //Capturando a Colisão entre o Player e o NPC
   for (let i = 0; i < characters.length; i++) {
     const character = characters[i]
 
@@ -45,7 +44,7 @@ function checkForPuzzleCollision({ puzzles, player, puzzleOffset = {x: 0, y: 0} 
         const puzzle = puzzles[i];
         if (
             rectangularCollision({
-                rectangle1: getPlayerHitbox(20, 20),
+                rectangle1: player,
                 rectangle2: {
                     ...puzzle,
                     position: {
