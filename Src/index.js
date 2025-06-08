@@ -252,6 +252,58 @@ puzzlesMap.forEach((row, i) => {
                 })
             )
         }
+        //Map Puzzle
+        if (symbol === 28497) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'islandModal',
+                    puzzleType: 'map'
+                })
+            )
+        }
+        //Music Puzzle
+        if (symbol === 28498) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'musicModal',
+                    puzzleType: 'music'
+                })
+            )
+        }
+        //Binary Puzzle
+        if (symbol === 28499) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'binaryModal',
+                    puzzleType: 'binary'
+                })
+            )
+        }
+        //Moon Puzzle
+        if (symbol === 28500) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'moonModal',
+                    puzzleType: 'moon'
+                })
+            )
+        }
     })
 });
 
