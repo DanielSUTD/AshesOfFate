@@ -331,8 +331,10 @@ const renderables = [
 
 let lastKey = ''
 
-
 let animationId
+
+//Variável existe antes de declarada, OBS: Não é uma boa implementação!
+window.isModalOpen = false;
 
 const battle = {
     initiated: false
@@ -563,12 +565,15 @@ function initiateBattle() {
 
 //Função principal
 function animate() {
+    //Puzzle
+    if (isModalOpen) return;
 
     animationId = window.requestAnimationFrame(animate);
 
     // Renderização
     renderables.forEach(renderable => renderable.draw());
 
+    //Batalha
     if (battle.initiated) return;
 
     // Verificação de colisão com puzzles
@@ -662,6 +667,7 @@ function movementKeyUp(key) {
 //Eventos
 
 window.addEventListener('keydown', (e) => {
+
     if (player.isInteracting) {
         if (e.key === ' ') {
             dialogueInteraction();

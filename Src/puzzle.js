@@ -17,7 +17,12 @@ function checkAllPuzzlesCompleted() {
 function openPuzzle(modalId) {
   document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
-  cancelAnimationFrame(animationId);
+
+  // Cancela a animação atual
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+    animationId = null;
+  }
 
   if (modalId === 'musicModal') {
     initNoteButtons();
@@ -30,14 +35,12 @@ function openPuzzle(modalId) {
 function closeModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
   isModalOpen = false;
-  if (!battle.initiated) {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
-    }
-    animate();
+  //Cancela animação existente
+  if (animationId) {
+    cancelAnimationFrame(animationId);
   }
+  animate();
 
-  // Foca no canvas para capturar eventos de teclado
   canvas.focus();
 }
 
@@ -219,13 +222,13 @@ let moonOptions = [];
 function initMoonPuzzle() {
   const moonOptionsContainer = document.getElementById('moonOptions');
   const moonSlotsContainer = document.getElementById('moonSlots');
-  
+
   moonOptionsContainer.innerHTML = '';
   moonSlotsContainer.innerHTML = '';
   selectedMoons = Array(moonPhases.length).fill(null);
-  
+
   moonOptions = [...moonPhases].sort(() => Math.random() - 0.5);
-  
+
   moonOptions.forEach((moon, index) => {
     const button = document.createElement('button');
     button.innerHTML = moon.emoji;
@@ -234,15 +237,15 @@ function initMoonPuzzle() {
     button.addEventListener('click', () => selectMoonPhase(moon));
     moonOptionsContainer.appendChild(button);
   });
-  
+
   for (let i = 0; i < moonPhases.length; i++) {
-  const slot = document.createElement('div');
-  slot.dataset.index = i;
-  slot.innerHTML = '?'; // <-- Aqui
-  slot.addEventListener('click', () => removeMoonFromSlot(i));
-  moonSlotsContainer.appendChild(slot);
-}
-  
+    const slot = document.createElement('div');
+    slot.dataset.index = i;
+    slot.innerHTML = '?'; // <-- Aqui
+    slot.addEventListener('click', () => removeMoonFromSlot(i));
+    moonSlotsContainer.appendChild(slot);
+  }
+
   document.getElementById('verifyMoonSequence').addEventListener('click', verifyMoonSequence);
   document.getElementById('moonFeedback').textContent = "";
 }
@@ -270,21 +273,21 @@ function removeMoonFromSlot(index) {
 
 function verifyMoonSequence() {
   const feedback = document.getElementById('moonFeedback');
-  
+
   if (selectedMoons.length !== moonPhases.length || selectedMoons.some(m => !m)) {
     showFeedback(feedback, "Preencha todos os slots com as fases da lua!", "#891616");
     return;
   }
-  
+
   const isCorrect = selectedMoons.every((moon, index) => {
     return moon.date === moonPhases[index].date;
   });
-  
+
   if (isCorrect) {
     showFeedback(feedback, "Sequência correta! Você ordeneou corretamente!", "#265c28");
     completedPuzzles.moon = true;
     setTimeout(() => closeModal('moonModal'), 1500);
-    
+
     const slots = document.querySelectorAll('#moonSlots div');
     slots.forEach(slot => {
       slot.style.backgroundColor = "#4caf50";
@@ -292,7 +295,7 @@ function verifyMoonSequence() {
     });
   } else {
     showFeedback(feedback, "Sequência incorreta. Tente novamente!", "#891616");
-    
+
     const slots = document.querySelectorAll('#moonSlots div');
     selectedMoons.forEach((moon, index) => {
       if (moon.date !== moonPhases[index].date) {
@@ -300,22 +303,28 @@ function verifyMoonSequence() {
         slots[index].style.border = "2px solid #c62828";
       }
     });
-    
+
     setTimeout(() => {
-    slots.forEach((slot, index) => {
-      slot.innerHTML = '?';
-      slot.title = '';
-      slot.style.backgroundColor = '';
-      slot.style.border = "2px dashed #555";
-    });
-    selectedMoons = Array(moonPhases.length).fill(null);
-  }, 2000);
+      slots.forEach((slot, index) => {
+        slot.innerHTML = '?';
+        slot.title = '';
+        slot.style.backgroundColor = '';
+        slot.style.border = "2px dashed #555";
+      });
+      selectedMoons = Array(moonPhases.length).fill(null);
+    }, 2000);
   }
 }
 
 function openPuzzle(modalId) {
   document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
+
+  // Cancela a animação atual
+  if (animationId) {
+    cancelAnimationFrame(animationId);
+    animationId = null;
+  }
 
   if (modalId === 'musicModal') {
     initNoteButtons();
