@@ -181,7 +181,7 @@
 }
 
 .moon-options {
-  margin-top: -2px;
+  margin-top: -20px;
 }
 
 .moon-slots div {
@@ -221,4 +221,40 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/*Modal Final - Baú*/
+
+.chest-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.chest-image {
+  width: 150px;
+  height: auto;
+  margin: 20px 0;
+  animation: pulse 1.5s infinite;
+}
+
+.chest-close-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #5e3a1a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+}
+
+.chest-close-btn:hover {
+  background-color: #7a4b23;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }

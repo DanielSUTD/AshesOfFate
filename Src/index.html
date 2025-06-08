@@ -166,6 +166,18 @@
       </div>
     </div>
 
+    <!-- Modal do Baú -->
+    <div id="chestModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('chestModal')">&times;</span>
+        <h2>Baú dos Tesouros</h2>
+        <div class="chest-container">
+          <p>Parabéns! Você completou todos os puzzles!</p>
+          <p>Recompensa: <strong>Chave do Destino</strong></p>
+        </div>
+      </div>
+    </div>
+
     <!-- Botões de Teste -->
     <div class="test-buttons">
       <button onclick="openPuzzle('binaryModal')">Testar Binário</button>
@@ -173,6 +185,7 @@
       <button onclick="openPuzzle('musicModal')">Testar Musical</button>
       <button onclick="openPuzzle('islandModal')">Testar Ilhas</button>
       <button onclick="openPuzzle('moonModal')">Testar Lunar</button>
+      <button onclick="tryOpenFinalModal('chestModal')">Testar Baú</button>
     </div>
   </class>
   </div>

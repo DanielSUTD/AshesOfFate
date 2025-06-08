@@ -1,6 +1,18 @@
 // Variável global para controle de modais
 let isModalOpen = false;
 
+const completedPuzzles = {
+  binary: false,
+  morse: false,
+  music: false,
+  island: false,
+  moon: false
+};
+
+function checkAllPuzzlesCompleted() {
+  return Object.values(completedPuzzles).every(status => status === true);
+}
+
 // Funções gerais
 function openPuzzle(modalId) {
   document.getElementById(modalId).style.display = 'block';
@@ -43,6 +55,7 @@ function verifyBinary() {
 
   if (answer === "vida") {
     showFeedback(feedback, "Resposta correta!", "#265c28");
+    completedPuzzles.binary = true;
     setTimeout(() => closeModal('binaryModal'), 1500);
   } else {
     showFeedback(feedback, "Tente novamente.", "#891616");
@@ -56,6 +69,7 @@ function verifyMorse() {
 
   if (answer === "DESTINO") {
     showFeedback(feedback, "Resposta correta!", "#265c28");
+    completedPuzzles.morse = true;
     setTimeout(() => closeModal('morseModal'), 1500);
   } else {
     showFeedback(feedback, "Tente novamente.", "#891616");
@@ -141,6 +155,7 @@ function checkUserSequence() {
 
   if (isCorrect) {
     showFeedback(feedback, "Sequência correta!", "#265c28");
+    completedPuzzles.music = true;
     setTimeout(() => closeModal('musicModal'), 1500);
   } else {
     showFeedback(feedback, "Sequência incorreta. Tente novamente.", "#891616");
@@ -161,6 +176,7 @@ function verifyIsland() {
 
   if (answer === "ilha" || answer === "ilhas") {
     showFeedback(feedback, "Correto! Todos são países-ilhas!", "#265c28");
+    completedPuzzles.island = true;
     setTimeout(() => closeModal('islandModal'), 1500);
   } else {
     showFeedback(feedback, "Tente novamente. Pense em geografia...", "#891616");
@@ -265,7 +281,8 @@ function verifyMoonSequence() {
   });
   
   if (isCorrect) {
-    showFeedback(feedback, "Sequência correta! Você ordenou as fases da lua pelas datas corretamente!", "#265c28");
+    showFeedback(feedback, "Sequência correta! Você ordeneou corretamente!", "#265c28");
+    completedPuzzles.moon = true;
     setTimeout(() => closeModal('moonModal'), 1500);
     
     const slots = document.querySelectorAll('#moonSlots div');
@@ -309,4 +326,13 @@ function openPuzzle(modalId) {
     initMoonPuzzle();
     document.getElementById('moonFeedback').textContent = "";
   }
+}
+
+function tryOpenFinalModal(modalId) {
+  if (!checkAllPuzzlesCompleted()) {
+    alert("Você precisa completar todos os enigmas antes de continuar!");
+    return;
+  }
+
+  openPuzzle(modalId);
 }
