@@ -1,9 +1,9 @@
 class Puzzle extends Boundary {
-    constructor({ position, modalId, puzzleType }) {
+    constructor({ position, modalId, puzzleType, isFinalChest }) {
         super({ position });
         this.modalId = modalId;
         this.puzzleType = puzzleType;
-        this.isSolved = false;
+        this.isFinalChest = false;
     }
 
     draw() {

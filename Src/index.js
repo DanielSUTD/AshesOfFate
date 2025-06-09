@@ -304,6 +304,21 @@ puzzlesMap.forEach((row, i) => {
                 })
             )
         }
+        //Final Chest
+        if (symbol === 28501) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'chestModal',
+                    puzzleType: 'chest',
+                    isFinalChest: true
+                })
+            )
+        }
+
     })
 });
 
@@ -397,7 +412,7 @@ function upMovement() {
 }
 
 //Down Movement
-function downMovement(){
+function downMovement() {
     player.animate = true;
     player.image = player.sprites.down;
 
@@ -419,7 +434,7 @@ function downMovement(){
 }
 
 //Left Movement
-function leftMovement(){
+function leftMovement() {
     player.animate = true;
     player.image = player.sprites.left;
 
@@ -441,7 +456,7 @@ function leftMovement(){
 }
 
 //Right Movement
-function rightMovement(){
+function rightMovement() {
     player.animate = true;
     player.image = player.sprites.right;
 
@@ -505,7 +520,7 @@ function battleZoneCollisions() {
     for (let i = 0; i < battleZones.length; i++) {
         const battleZone = battleZones[i];
         const overlappingArea = calculateOverlapArea(battleZone);
-        
+
         if (shouldInitiateBattle(battleZone, overlappingArea)) {
             initiateBattle();
             break;
@@ -519,10 +534,10 @@ function calculateOverlapArea(battleZone) {
         player.position.x + player.width,
         battleZone.position.x + battleZone.width
     ) - Math.max(player.position.x, battleZone.position.x)) *
-    (Math.min(
-        player.position.y + player.height,
-        battleZone.position.y + battleZone.height
-    ) - Math.max(player.position.y, battleZone.position.y));
+        (Math.min(
+            player.position.y + player.height,
+            battleZone.position.y + battleZone.height
+        ) - Math.max(player.position.y, battleZone.position.y));
 }
 
 //Verifica batalha
@@ -531,15 +546,15 @@ function shouldInitiateBattle(battleZone, overlappingArea) {
         rectangle1: getPlayerHitbox(20, 20),
         rectangle2: battleZone
     }) &&
-    overlappingArea > (player.width * player.height) / 4 &&
-    Math.random() < 0.01;
+        overlappingArea > (player.width * player.height) / 4 &&
+        Math.random() < 0.01;
 }
 
 //Batalhas
 function initiateBattle() {
     window.cancelAnimationFrame(animationId);
     audio.Map.stop();
-    
+
     battle.initiated = true;
     gsap.to('#overlappingDiv', {
         opacity: 1,
@@ -585,6 +600,27 @@ function animate() {
 
     // Lógica de movimento
     movementPlayer();
+
+    if (player.currentPuzzle && player.currentPuzzle.puzzleType === 'chest') {
+        // Desenha um efeito visual ao redor do baú
+        c.fillStyle = 'rgba(255, 215, 0, 0.3)';
+        c.fillRect(
+            player.currentPuzzle.position.x - background.position.x,
+            player.currentPuzzle.position.y - background.position.y,
+            Boundary.width,
+            Boundary.height
+        );
+
+        // Mostra mensagem de interação
+        c.fillStyle = 'white';
+        c.font = '16px Arial';
+        c.fillText(
+            'Pressione E para interagir',
+            canvas.width / 2 - 100,
+            canvas.height - 50
+        );
+    }
+
 }
 
 function dialogueInteraction() {
@@ -596,7 +632,7 @@ function dialogueInteraction() {
         return;
     }
 
-    
+
     endDialogue();
 }
 
@@ -608,30 +644,44 @@ function endDialogue() {
 
 function startDialogue() {
     if (!player.interactionAsset) return;
-    
+
     const firstMessage = player.interactionAsset.dialogue[0];
     document.querySelector('#characterDialogueBox').innerHTML = firstMessage;
     document.querySelector('#characterDialogueBox').style.display = 'flex';
     player.isInteracting = true;
 }
 
-function puzzleInteraction() {
-    if (!player.currentPuzzle || !player.nearPuzzle) return;
-    
-    const distance = Math.sqrt(
-        Math.pow(player.position.x - player.currentPuzzle.position.x, 2) +
-        Math.pow(player.position.y - player.currentPuzzle.position.y, 2)
-    );
-    
-    if (distance < 100) {
-        console.log("Abrindo puzzle:", player.currentPuzzle.modalId);
-        openPuzzle(player.currentPuzzle.modalId);
-    } else {
-        player.nearPuzzle = false;
-        player.currentPuzzle = null;
-    }
+function canOpenChest() {
+    return window.checkAllPuzzlesCompleted()
 }
 
+function puzzleInteraction() {
+    if (!player.currentPuzzle || !player.nearPuzzle) return;
+
+    const dx = player.position.x - player.currentPuzzle.position.x;
+    const dy = player.position.y - player.currentPuzzle.position.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance >= 100) {
+        player.nearPuzzle = false;
+        player.currentPuzzle = null;
+        return;
+    }
+
+    const { puzzleType, modalId } = player.currentPuzzle;
+
+    if (puzzleType === 'chest') {
+        if (canOpenChest()) {
+            console.log("Abrindo baú final: chestModal");
+            openPuzzle('chestModal');
+        } else {
+            alert("Você precisa completar todos os enigmas antes de abrir este baú!");
+        }
+    } else {
+        console.log("Abrindo puzzle:", modalId);
+        openPuzzle(modalId);
+    }
+}
 
 function movementKeyDown(key) {
     switch (key) {
@@ -698,7 +748,7 @@ window.addEventListener('keyup', (e) => {
     }
 });
 
- 
+
 let clicked = false;
 addEventListener('click', () => {
     if (!clicked) {
