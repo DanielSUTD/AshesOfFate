@@ -3,7 +3,7 @@ const attacks = {
     //ZARIEN ATTACKS
     'Quick Slash': {
         name: 'Quick Slash',
-        damage: 10,
+        damage: 20,
         type: 'Normal',
         color: '#696969'
     },

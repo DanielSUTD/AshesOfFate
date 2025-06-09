@@ -143,17 +143,26 @@ body {
 
 #user-interface {
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .battle-bar {
-  height: 100px;
+  height: 140px;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 4px solid #444;
   display: flex;
   z-index: 10;
   font-family: "Press Start 2P", cursive;
+  pointer-events: auto;
 }
 
 /* Área dos Botões de Ataque */
@@ -188,13 +197,20 @@ body {
   color: black;
 }
 
+.attack-buttons button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #000;
+}
+
 /* Área do Tipo de Ataque */
 .attack-type {
-  width: 33.33%;
+  width: 30%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 1rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 /* Tipo de Ataque */
@@ -211,13 +227,16 @@ body {
 /* Div que controla toda a Batalha */
 .battle-status-container {
   position: absolute;
-  top: 40px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 60px;
   z-index: 30;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 10px;
 }
 
 /* Vida do Player e Enemy */
@@ -231,16 +250,20 @@ body {
 
 /* Ícone do Personagem */
 .character-icon {
-  width: 64px;
-  height: 64px;
-  display: block;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #fff;
+  border-radius: 50%;
 }
 
 /* Área da Barra de Vida */
 .health-bar {
   position: relative;
-  height: 6px;
-  width: 180px;
+  height: 10px;
+  width: 200px;
+  background: #333;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 /* Fundo da Barra de Vida */
@@ -252,11 +275,12 @@ body {
 
 /* Barra de Vida */
 .health-bar-fill {
-  background-color: green;
+  background: linear-gradient(to right, #4CAF50, #8BC34A);
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  transition: width 0.3s ease;
 }
 
 /* VS */
@@ -268,8 +292,9 @@ body {
 
 /* VS - Icon */
 .vs-icon {
-  width: 60px;
-  height: auto;
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 0 5px rgba(173, 164, 164, 0.7));
 }
 
 /* Barra de Diálogo */
@@ -287,7 +312,7 @@ body {
 /* Diálogo NPCS */
 #characterDialogueBox {
   background-color: white;
-  height: 140px;
+  height: 100px;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -298,4 +323,38 @@ body {
   color: black;
 }
 
+@media (max-height: 700px),
+(max-width: 1000px) {
+  .battle-status-container {
+    top: 5px;
+    padding: 1px 5px;
+    gap: 30px;
+    background-color: transparent;
+  }
 
+  .battle-bar {
+    height: 80px;
+    flex-direction: column;
+    font-size: 0.6rem;
+  }
+
+  .attack-buttons {
+    width: 100%;
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .vs-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .character-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .battle-dialogue {
+    font-size: 1rem;
+  }
+}
