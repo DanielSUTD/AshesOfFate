@@ -252,6 +252,58 @@ puzzlesMap.forEach((row, i) => {
                 })
             )
         }
+        //Map Puzzle
+        if (symbol === 28497) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'islandModal',
+                    puzzleType: 'map'
+                })
+            )
+        }
+        //Music Puzzle
+        if (symbol === 28498) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'musicModal',
+                    puzzleType: 'music'
+                })
+            )
+        }
+        //Binary Puzzle
+        if (symbol === 28499) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'binaryModal',
+                    puzzleType: 'binary'
+                })
+            )
+        }
+        //Moon Puzzle
+        if (symbol === 28500) {
+            puzzles.push(
+                new Puzzle({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    modalId: 'moonModal',
+                    puzzleType: 'moon'
+                })
+            )
+        }
     })
 });
 
@@ -279,8 +331,10 @@ const renderables = [
 
 let lastKey = ''
 
-
 let animationId
+
+//Variável existe antes de declarada, OBS: Não é uma boa implementação!
+window.isModalOpen = false;
 
 const battle = {
     initiated: false
@@ -511,12 +565,15 @@ function initiateBattle() {
 
 //Função principal
 function animate() {
+    //Puzzle
+    if (isModalOpen) return;
 
     animationId = window.requestAnimationFrame(animate);
 
     // Renderização
     renderables.forEach(renderable => renderable.draw());
 
+    //Batalha
     if (battle.initiated) return;
 
     // Verificação de colisão com puzzles
@@ -610,6 +667,7 @@ function movementKeyUp(key) {
 //Eventos
 
 window.addEventListener('keydown', (e) => {
+
     if (player.isInteracting) {
         if (e.key === ' ') {
             dialogueInteraction();
