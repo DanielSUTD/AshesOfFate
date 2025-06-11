@@ -19,8 +19,8 @@ const puzzles = []
 
 //Posição Inicial
 const offset = {
-    x: -7000,
-    y: -2460
+    x: -6850,
+    y: -2700
 }
 
 //NPCS
@@ -369,21 +369,22 @@ function getPlayerHitbox(offsetX, offsetY) {
 
 //Lógica de animação do player
 function movementPlayer() {
-    let moving = true;
     player.animate = false;
 
-    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-        battleZoneCollisions();
-    }
+    const isMoving = keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed;
 
-    if (keys.w.pressed && lastKey === 'w') {
-        upMovement();
-    } else if (keys.a.pressed && lastKey === 'a') {
-        leftMovement();
-    } else if (keys.s.pressed && lastKey === 's') {
-        downMovement();
-    } else if (keys.d.pressed && lastKey === 'd') {
-        rightMovement();
+    if (isMoving) {
+        battleZoneCollisions();
+
+        if (keys.w.pressed && lastKey === 'w') {
+            upMovement();
+        } else if (keys.a.pressed && lastKey === 'a') {
+            leftMovement();
+        } else if (keys.s.pressed && lastKey === 's') {
+            downMovement();
+        } else if (keys.d.pressed && lastKey === 'd') {
+            rightMovement();
+        }
     }
 
     idleAnimation();
@@ -711,6 +712,12 @@ function movementKeyUp(key) {
         case 's': keys.s.pressed = false; break;
         case 'd': keys.d.pressed = false; break;
     }
+
+
+    if (keys.w.pressed) lastKey = 'w';
+    else if (keys.a.pressed) lastKey = 'a';
+    else if (keys.s.pressed) lastKey = 's';
+    else if (keys.d.pressed) lastKey = 'd';
 }
 
 
