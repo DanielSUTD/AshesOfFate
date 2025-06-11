@@ -2,12 +2,12 @@
 //Retângulo 2 = Representa o Limite do Mapa
 //Verifica Colisões
 function rectangularCollision({ rectangle1, rectangle2 }) {
-    return (
-        rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
-        rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
-        rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
-        rectangle1.position.y + rectangle1.height >= rectangle2.position.y
-    )
+  return (
+    rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
+    rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
+    rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
+    rectangle1.position.y + rectangle1.height >= rectangle2.position.y
+  )
 }
 
 function checkForCharacterCollision({
@@ -31,40 +31,79 @@ function checkForCharacterCollision({
         }
       })
     ) {
+
       player.interactionAsset = character
+      
+      c.fillStyle = 'rgba(0, 0, 0, 0.8)';
+      c.beginPath();
+      c.roundRect(canvas.width / 2 - 160, canvas.height - 80, 320, 40, 10);
+      c.fill();
+
+      
+      c.fillStyle = '#ffffff';
+      c.fillRect(canvas.width / 2 - 140, canvas.height - 70, 80, 20);
+      c.fillStyle = '#000000';
+      c.font = '10px "Press Start 2P"';
+      c.textAlign = 'center'; 
+      c.fillText('ESPAÇO', canvas.width / 2 - 100, canvas.height - 55);
+
+      
+      c.fillStyle = '#ffffff';
+      c.font = '14px "Press Start 2P"';
+      c.textAlign = 'left';
+      c.fillText('PARA CONVERSAR', canvas.width / 2 - 50, canvas.height - 55);
       break
     }
   }
 }
 
-function checkForPuzzleCollision({ puzzles, player, puzzleOffset = {x: 0, y: 0} }) {
-    let colliding = false;
-    
-    for (let i = 0; i < puzzles.length; i++) {
-        const puzzle = puzzles[i];
-        if (
-            rectangularCollision({
-                rectangle1: player,
-                rectangle2: {
-                    ...puzzle,
-                    position: {
-                        x: puzzle.position.x + puzzleOffset.x,
-                        y: puzzle.position.y + puzzleOffset.y
-                    }
-                }
-            })
-        ) {
-            colliding = true;
-            player.nearPuzzle = true;
-            player.currentPuzzle = puzzle;
-            break;
+function checkForPuzzleCollision({ puzzles, player, puzzleOffset = { x: 0, y: 0 } }) {
+  let colliding = false;
+
+  for (let i = 0; i < puzzles.length; i++) {
+    const puzzle = puzzles[i];
+    if (
+      rectangularCollision({
+        rectangle1: player,
+        rectangle2: {
+          ...puzzle,
+          position: {
+            x: puzzle.position.x + puzzleOffset.x,
+            y: puzzle.position.y + puzzleOffset.y
+          }
         }
+      })
+    ) {
+
+      c.fillStyle = 'rgba(0, 0, 0, 0.8)';
+      c.beginPath();
+      c.roundRect(canvas.width / 2 - 160, canvas.height - 80, 320, 40, 10);
+      c.fill();
+
+      
+      c.fillStyle = '#ffffff';
+      c.fillRect(canvas.width / 2 - 140, canvas.height - 70, 80, 20);
+      c.fillStyle = '#000000';
+      c.font = '10px "Press Start 2P"';
+      c.textAlign = 'center'; 
+      c.fillText('E', canvas.width / 2 - 100, canvas.height - 55);
+
+      
+      c.fillStyle = '#ffffff';
+      c.font = '14px "Press Start 2P"';
+      c.textAlign = 'left';
+      c.fillText('PARA INTERAGIR', canvas.width / 2 - 50, canvas.height - 55);
+      colliding = true;
+      player.nearPuzzle = true;
+      player.currentPuzzle = puzzle;
+      break;
     }
-    
-    
-    if (!colliding) {
-        player.nearPuzzle = false;
-        player.currentPuzzle = null;
-    }
+  }
+
+
+  if (!colliding) {
+    player.nearPuzzle = false;
+    player.currentPuzzle = null;
+  }
 }
 

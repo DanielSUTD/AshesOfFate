@@ -13,7 +13,7 @@
   <div class="canvas-container">
 
     <!-- História -->
-     
+
     <!-- Menu do Jogo -->
     <!--
     <div id="introScreen">
@@ -35,6 +35,30 @@
       </div>
     </div>
     -->
+
+    <!-- Controles -->
+    <div id="controlsOverlay">
+      <div class="controls-container">
+        <h2>Controles</h2>
+        <div class="control-row">
+          <div class="key">W</div>
+          <span>Andar para cima</span>
+        </div>
+        <div class="control-row">
+          <div class="key">A</div>
+          <span>Andar para esquerda</span>
+        </div>
+        <div class="control-row">
+          <div class="key">S</div>
+          <span>Andar para baixo</span>
+        </div>
+        <div class="control-row">
+          <div class="key">D</div>
+          <span>Andar para direita</span>
+        </div>
+        <button id="startButton">Jogar</button>
+      </div>
+    </div>
 
     <!-- Área de Batalha -->
     <div id="overlappingDiv"></div>
@@ -175,7 +199,8 @@
       <div class="modal-content">
         <span class="close-btn" onclick="closeModal('chestModal')">&times;</span>
         <div class="chest-container">
-          <p><strong>Parabéns!!! </strong>Você concluiu todos os desafios, e recebeu a <strong>chave do destino</strong>... mas será que isso foi mesmo o certo a se fazer??</p>
+          <p><strong>Parabéns!!! </strong>Você concluiu todos os desafios, e recebeu a <strong>chave do
+              destino</strong>... mas será que isso foi mesmo o certo a se fazer??</p>
           <img src="../img/key-modal.png">
         </div>
         <button id="final-msg">Descubra a verdade</button>

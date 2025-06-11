@@ -139,6 +139,11 @@ const keys = {
     }
 }
 
+//Controles
+const controlsOverlay = document.getElementById('controlsOverlay');
+const startButton = document.getElementById('startButton');
+
+
 //Colisões
 for (let i = 0; i < collisions.length; i += 160) {
     collisionsMap.push(collisions.slice(i, 160 + i))
@@ -782,23 +787,24 @@ function animate() {
     movementPlayer();
 
     if (player.currentPuzzle && player.currentPuzzle.puzzleType === 'chest') {
-        // Desenha um efeito visual ao redor do baú
-        c.fillStyle = 'rgba(255, 215, 0, 0.3)';
-        c.fillRect(
-            player.currentPuzzle.position.x - background.position.x,
-            player.currentPuzzle.position.y - background.position.y,
-            Boundary.width,
-            Boundary.height
-        );
+        c.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        c.beginPath();
+        c.roundRect(canvas.width / 2 - 160, canvas.height - 80, 320, 40, 10);
+        c.fill();
 
-        // Mostra mensagem de interação
-        c.fillStyle = 'white';
-        c.font = '16px Arial';
-        c.fillText(
-            'Pressione E para interagir',
-            canvas.width / 2 - 100,
-            canvas.height - 50
-        );
+
+        c.fillStyle = '#ffffff';
+        c.fillRect(canvas.width / 2 - 140, canvas.height - 70, 80, 20);
+        c.fillStyle = '#000000';
+        c.font = '10px "Press Start 2P"';
+        c.textAlign = 'center';
+        c.fillText('E', canvas.width / 2 - 100, canvas.height - 55);
+
+
+        c.fillStyle = '#ffffff';
+        c.font = '14px "Press Start 2P"';
+        c.textAlign = 'left';
+        c.fillText('PARA INTERAGIR', canvas.width / 2 - 50, canvas.height - 55);
     }
 
 }
@@ -901,6 +907,11 @@ function movementKeyUp(key) {
 
 
 //Eventos
+
+startButton.addEventListener('click', () => {
+    controlsOverlay.style.display = 'none';
+});
+
 
 window.addEventListener('keydown', (e) => {
 
