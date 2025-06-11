@@ -32,10 +32,9 @@ class Player extends Sprite {
     //Animação de Ataque
     attack({ attack, recipient, renderedSprites }) {
 
-        // document.querySelector('#dialogue-box').style.display = 'block'
-        // document.querySelector('#dialogue-box').innerHTML = this.name + ' utilizou ' + attack.name
+        document.querySelector('#dialogue-box').style.display = 'block'
+        document.querySelector('#dialogue-box').innerHTML = this.name + ' utilizou ' + attack.name
 
-        showDialogue(`${this.name} utilizou ${attack.name}`);
 
         let healthBar = '.enemy-health .health-bar-fill'
         if (this.isEnemy) healthBar = '.player-health .health-bar-fill'
@@ -118,20 +117,4 @@ class Player extends Sprite {
                 break
         }
     }
-}
-
-function showDialogue(text, duration = 1500) {
-    const dialogueBox = document.querySelector('#dialogue-box');
-    dialogueBox.style.display = 'block';
-    dialogueBox.innerHTML = text;
-
-    setTimeout(() => {
-        dialogueBox.style.display = 'none';
-        if (queue.length > 0) {
-            const nextAction = queue.shift();
-            nextAction();
-        } else {
-            setAttackButtonsEnabled(true);
-        }
-    }, duration);
 }

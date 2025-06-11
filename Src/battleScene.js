@@ -62,6 +62,24 @@ function initBattle() {
     })
     setAttackButtonsEnabled(true)
 
+    zarien.attacks.forEach((attack, index) => {
+        const button = document.querySelectorAll('.attack-buttons button')[index];
+
+        // Mostrar tipo de ataque ao passar o mouse
+        button.addEventListener('mouseover', () => {
+            document.querySelector('#attack-style').innerHTML = attack.type;
+            document.querySelector('#attack-style').style.color = attack.color;
+        });
+
+        // Resetar ao tirar o mouse
+        button.addEventListener('mouseout', () => {
+            if (canClickDialogue) { // Só reseta se não estiver em um diálogo
+                document.querySelector('#attack-style').innerHTML = 'Tipo de Ataque';
+                document.querySelector('#attack-style').style.color = 'white';
+            }
+        });
+    });
+
     //Eventos de Ataque
     document.querySelectorAll('.attack-buttons button').forEach(button => {
         button.addEventListener('click', (e) => {
@@ -69,6 +87,11 @@ function initBattle() {
 
             const attackName = e.currentTarget.innerHTML.trim();
             const selectedAttack = attacks[attackName];
+
+            if (selectedAttack) {
+                document.querySelector('#attack-style').innerHTML = selectedAttack.type
+                document.querySelector('#attack-style').style.color = selectedAttack.color
+            }
 
             zarien.attack({
                 attack: selectedAttack,
@@ -137,12 +160,6 @@ function initBattle() {
             })
 
         })
-
-        button.addEventListener('mouseenter', (e) => {
-            const selectedAttack = attacks[e.currentTarget.innerHTML]
-            document.querySelector('#attack-style').innerHTML = selectedAttack.type
-            document.querySelector('#attack-style').style.color = selectedAttack.color
-        })
     })
 
 }
@@ -162,12 +179,12 @@ animate()
 
 //Diálogo
 document.querySelector('#dialogue-box').addEventListener('click', (e) => {
-    if (!canClickDialogue || e.currentTarget.style.display === 'none') return
+    if (!canClickDialogue || e.currentTarget.style.display === 'none') return;
 
-    canClickDialogue = false
+    canClickDialogue = false;
     setTimeout(() => {
-        canClickDialogue = true
-    }, 500)
+        canClickDialogue = true;
+    }, 500);
 
     if (queue.length > 0) {
         queue[0]()
@@ -175,5 +192,8 @@ document.querySelector('#dialogue-box').addEventListener('click', (e) => {
     } else {
         e.currentTarget.style.display = 'none'
         setAttackButtonsEnabled(true)
+        // Só reseta se não houver mais ações
+        document.querySelector('#attack-style').innerHTML = 'Tipo de Ataque'
+        document.querySelector('#attack-style').style.color = 'white'
     }
 })
