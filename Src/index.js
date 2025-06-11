@@ -28,7 +28,25 @@ const drayven = new Image()
 drayven.src = '/assets/Character/Drayven.png'
 
 const oldman = new Image()
-oldman.src = '/assets/Character/OldMan.png'
+oldman.src = '/assets/Character/032Game.png'
+
+const npc_1 = new Image()
+npc_1.src = '/assets/Character/001Game.png'
+
+const npc_2 = new Image()
+npc_2.src = '/assets/Character/003Game.png'
+
+const npc_3 = new Image()
+npc_3.src = '/assets/Character/008Game.png'
+
+const npc_4 = new Image()
+npc_4.src = '/assets/Character/009Game.png'
+
+const npc_5 = new Image()
+npc_5.src = '/assets/Character/010Game.png'
+
+const npc_6 = new Image()
+npc_6.src = '/assets/Character/022Game.png'
 
 //Mapa
 const image = new Image()
@@ -219,6 +237,167 @@ charactersMap.forEach((row, i) => {
                     scale: 2.5,
                     animate: true,
                     dialogue: ['Essa vila é antiga...']
+                })
+            )
+        }
+
+        // 28502 === NPC_1
+        else if (symbol === 28502) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_1,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        //28503 === NPC_2
+        else if (symbol === 28503) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_2,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        // 28504 === NPC_3
+        else if (symbol === 28504) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_3,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        // 28502 === NPC_4
+        else if (symbol === 28505) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_4,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        // 28506 === NPC_5
+        else if (symbol === 28506) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_5,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        // 28507 === NPC_6
+        else if (symbol === 28507) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: npc_6,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 2.5,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        //DRAYVEN - 2
+        // 28508 === Drayven - 2
+        else if (symbol === 28508) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: drayven,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 3,
+                    animate: true,
+                    dialogue: ['...', '...']
+                })
+            )
+        }
+
+        // 28509 === Drayven - 3
+        else if (symbol === 28509) {
+            characters.push(
+                new Character({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    },
+                    image: drayven,
+                    frames: {
+                        max: 4,
+                        hold: 60
+                    },
+                    scale: 3,
+                    animate: true,
+                    dialogue: ['...', '...']
                 })
             )
         }

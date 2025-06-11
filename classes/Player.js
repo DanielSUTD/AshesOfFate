@@ -21,8 +21,15 @@ class Player extends Sprite {
             y: this.position.y + 20
         })
         gsap.to(this, {
-            opacity: 0
+            opacity: 0,
+            duration: 1,
+            onComplete: () => {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
         })
+
         //Som(Batalha finalizada)
         //audio.battle.stop()
         //Som(Quando é derrotado)
