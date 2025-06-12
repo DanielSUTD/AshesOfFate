@@ -139,10 +139,6 @@ const keys = {
     }
 }
 
-//Controles
-const controlsOverlay = document.getElementById('controlsOverlay');
-const startButton = document.getElementById('startButton');
-
 
 //Colisões
 for (let i = 0; i < collisions.length; i += 160) {
@@ -763,7 +759,6 @@ function initiateBattle() {
     });
 }
 
-//Função principal
 function animate() {
     //Puzzle
     if (isModalOpen) return;
@@ -907,12 +902,6 @@ function movementKeyUp(key) {
 
 
 //Eventos
-
-startButton.addEventListener('click', () => {
-    controlsOverlay.style.display = 'none';
-});
-
-
 window.addEventListener('keydown', (e) => {
 
     if (player.isInteracting) {
@@ -942,14 +931,5 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('keyup', (e) => {
     if (['w', 'a', 's', 'd'].includes(e.key)) {
         movementKeyUp(e.key);
-    }
-});
-
-
-let clicked = false;
-addEventListener('click', () => {
-    if (!clicked) {
-        audio.Map.play();
-        clicked = true;
     }
 });

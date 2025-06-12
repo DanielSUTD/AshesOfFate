@@ -14,49 +14,46 @@
 
     <!-- História -->
 
-    <!-- Menu do Jogo -->
-    <!--
+    <!-- Tela Inicial -->
     <div id="introScreen">
       <img src="/img/Logo.png" alt="Ashes of Fate" class="logo-image">
       <button id="initButton" onclick="showStory()">
         <img src="/img/BotaoInicio.png" alt="Ícone" class="button-icon"> INICIAR
       </button>
     </div>
-    -->
 
-    <!-- Tela de história do Jogo -->
-    <!--
-    <div id="storyScreen">
+    <!-- Tela de história -->
+    <div id="storyScreen" style="display: none;">
       <div class="story-container">
         <p id="storyText"></p>
+
         <div class="button-container">
-          <img id="startButton" src="/img/BotaoStart.png" alt="START" onclick="startGame()">
+          <button id="continueButton" class="pixel-button-fire" onclick="showControls()"
+            style="display: none;">Continuar</button>
+
+          <button id="skipButton" class="pixel-button-fire" onclick="showControls()">Pular</button>
         </div>
+
       </div>
     </div>
-    -->
 
     <!-- Controles -->
-    <div id="controlsOverlay">
+
+    <div id="controlsOverlay" style="display: none;">
       <div class="controls-container">
-        <h2>Controles</h2>
-        <div class="control-row">
-          <div class="key">W</div>
-          <span>Andar para cima</span>
+        <h2>Guia do Aventureiro</h2>
+
+        <div class="instructions-text">
+          <p><strong>Movimentação:</strong> W, A, S, D</p>
+          <p><strong>Interagir com Personagens:</strong> Tecla ESPAÇO</p>
+          <p><strong>Resolver Puzzles:</strong> Tecla E</p>
+          <p><strong>Avançar nos Diálogos:</strong> Continue pressionando ESPAÇO.</p>
+          <br>
+          <p><strong>ATENÇÃO!</strong> Batalhas podem surgir a qualquer momento. Em combate, escolha seu ataque e clique
+            na caixa de diálogo para a ação acontecer.</p>
         </div>
-        <div class="control-row">
-          <div class="key">A</div>
-          <span>Andar para esquerda</span>
-        </div>
-        <div class="control-row">
-          <div class="key">S</div>
-          <span>Andar para baixo</span>
-        </div>
-        <div class="control-row">
-          <div class="key">D</div>
-          <span>Andar para direita</span>
-        </div>
-        <button id="startButton">Jogar</button>
+
+        <button id="playButton" class="pixel-button-fire" onclick="startGame()">Jogar</button>
       </div>
     </div>
 

@@ -173,7 +173,7 @@ function animateBattle() {
     })
 }
 
-animate()
+//animate()
 //initBattle()
 //animateBattle()
 
