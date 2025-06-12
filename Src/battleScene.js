@@ -35,7 +35,12 @@ function initBattle() {
     document.querySelector('.player-health .health-bar-fill').style.width = '100%'
     document.querySelector('.attack-buttons').replaceChildren()
 
-    mage = new Monster(monsters.mage)
+
+    mage = new Monster({ 
+        ...monsters.mage, 
+        position: { ...monsters.mage.position } 
+    });
+
     zarien = new Player({
         position: {
             x: 420,
@@ -116,8 +121,6 @@ function initBattle() {
                             })
 
                             battle.initiated = false
-                            //Som do Jogo
-                            audio.Map.play()
                         }
                     })
                 })
@@ -152,7 +155,7 @@ function initBattle() {
 
                                 battle.initiated = false
                                 //Som do Jogo
-                                //audio.Map.play()
+                                audio.Map.play()
                             }
                         })
                     })

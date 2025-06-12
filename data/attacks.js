@@ -26,7 +26,7 @@ const attacks = {
     
     'Fireball':{
         name: 'Fireball',
-        damage: 30,
+        damage: 15,
         type: 'Fogo',
         color: '#FF4500'
     },
