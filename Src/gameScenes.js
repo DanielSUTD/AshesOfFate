@@ -1,6 +1,6 @@
 
 const story = `
-Zarien Thorne, um homem consumido pela dor, parte em busca dos lendários Três Artefatos de Terra Desconhecida (Ilhas de Orlath) para ressuscitar sua esposa, morta por uma doença misteriosa.
+Zarien Thorne, um homem consumido pela dor, parte em busca dos lendários Cinco Artefatos de Terra Desconhecida (Ilhas de Orlath) para ressuscitar sua esposa, morta por uma doença misteriosa.
 `;
 
 
