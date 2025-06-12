@@ -662,7 +662,7 @@ function checkBoundaryCollision({ offsetX, offsetY }) {
     for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (rectangularCollision({
-            rectangle1: getPlayerHitbox(20, 20),
+            rectangle1: getPlayerHitbox(25, 25),
             rectangle2: {
                 ...boundary,
                 position: {
