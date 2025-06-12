@@ -222,7 +222,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 3,
                     animate: true,
-                    dialogue: ['As Ilhas de Orlath adoram devorar homens como você.', 'Mas eu posso guiá-lo. Mostrar onde os Artefatos estão... e o preço que realmente exigem.']
+                    dialogue: ['As Ilhas de Orlath adoram devorar homens como você.', 'Mas eu posso guiá-lo, para sobreviver será necessário explorar todo o mapa e encontrar os 5 artefatos.', 'Não perca mais tempo, comece a sua jornada!']
                 })
             )
         }
@@ -241,7 +241,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['Essa vila é antiga...']
+                    dialogue: ['Essa vila é antiga... você já deve ter escutado falar sobre. E como as notícias correm rápido, sei o que busca aqui.', 'Ninguém nunca conseguiu liberar todos os artefatos... mas tenho uma dica que pode te ajudar.', 'Lá onde a água dança sem parar, segredos antigos vêm a sussurrar. Procure no centro do espelho a brilhar, pois algo além do reflexo há de encontrar.']
                 })
             )
         }
@@ -261,7 +261,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['Fiquei sabendo que você é novo por aqui e está em busca de desbloquear o antigo baú.', 'Para isso, apenas te digo: cuidado por onde pisa, evite ao máximo as batalhas, elas adoram se esconder... Tenha uma boa sorte, já que os últimos não tiveram.']
                 })
             )
         }
@@ -281,7 +281,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['Seja muito bem-vindo à nossa vila. Ela não é a melhor de todas, mas é o melhor que poderíamos ter, pelo menos ainda não está destruida como o outro lado...', 'Depois que a maldição se espalhou por lá, poucos foram os que restaram para contar história...', 'Enfim, espero que goste daqui, e converse com os outros também, eles poderão te ajudar no que precisas.']
                 })
             )
         }
@@ -301,7 +301,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['As asas um dia cortaram o céu, mas hoje descansam em meio ao véu. Entre destroços do que foi viagem, jaz um enigma entre a paisagem.']
                 })
             )
         }
@@ -321,7 +321,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['Então você é o mais novo corajoso que vai em busca dos famosos artefatos? hahahahaha', 'Eu até te daria uma dica, mas sei que não vai adiantar nada. Todos falam tanto sobre essa lenda de completar os artefatos, que eu até me pergunto se é verdade...']
                 })
             )
         }
@@ -341,7 +341,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['Hey, confesso que quando me falaram que tinha um novo alguém em busca de liberar sabe-se o que, jamais imaginei que seria como você.', 'A única pista que tenho foi um papel que encontrei em uma garrafa, e ele dizia: "Rodava gigantemente no mundo num ritmo sem fim, agora parada, silenciosa assim. No alto ou ambaixo, onde já brilhou, um pedaço do mistério ali ficou."', 'Não sei qual a sua motivação para essa missão, espero que seja muito boa e que consiga completá-la (com sucesso).']
                 })
             )
         }
@@ -361,7 +361,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 2.5,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['E aí cara, tudo bem? Tá em busca dos artefatos né? Se liga no que acabei de escutar.', '"De pedra é feito quem tudo observou, sem mover-se, tudo notou. Nas sombras de um guardião esquecido, um segredo repousa escondido.', 'Não sei o que significa, mas pode ser que te ajude em algo.', 'Ahhh, além disso tem outra coisa: evite cortar caminhos... nunca se sabe para o que eles te levarão.']
                 })
             )
         }
@@ -382,7 +382,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 3,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['E aí? Já conseguiu quantos artefatos? Já resolveu o que está bem de baixo do seu nariz?', 'Lembre-se: relacione cada dica recebida com lugares presentes na nossa querida ilha. Só assim você não ficará perambulando perdido por aí.']
                 })
             )
         }
@@ -402,7 +402,7 @@ charactersMap.forEach((row, i) => {
                     },
                     scale: 3,
                     animate: true,
-                    dialogue: ['...', '...']
+                    dialogue: ['Olha só, você de novo por aqui, até que você está indo bem. Mas será que conseguiu resolver todos os desafios?', 'Sei que um deles pode está mais próximo ao final do que pensa. E falando nisso, você lembra qual o destino ou objeto final?', 'Espero que sim, caso contrário terá que voltar no começo de tudo para descobrir...']
                 })
             )
         }
