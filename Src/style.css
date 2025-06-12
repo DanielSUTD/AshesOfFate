@@ -135,6 +135,74 @@ body {
   margin-top: 1rem;
 }
 
+
+#controlsOverlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+
+.controls-container {
+  background: linear-gradient(145deg, #212121, #2b2b2b); 
+  border: 2px solid #a14a27;
+  border-radius: 8px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 0 20px rgba(255, 107, 33, 0.3), 
+  inset 0 0 15px rgba(0, 0, 0, 0.5); 
+  max-width: 650px;
+  text-align: center;
+}
+
+
+.controls-container h2 {
+  color: #ff8c00;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+
+.instructions-text {
+  text-align: left;
+  line-height: 1.8;
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+
+.instructions-text strong {
+  color: #ffaf6e;
+  font-weight: normal;
+}
+
+
+.pixel-button-fire {
+  font-family: 'Press Start 2P', cursive;
+  background-color: transparent;
+  color: #ffcab0; 
+  border: 2px solid #ff8c00; 
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 2rem;
+  border-radius: 5px;
+  transition: all 0.3s ease; 
+  position: relative; 
+  overflow: hidden; 
+}
+
+.pixel-button-fire:hover {
+  background-color: #ff8c00;
+  color: #1c1c1c; 
+  box-shadow: 0 0 25px #ff8c00, 0 0 10px #ffffff; 
+  transform: scale(1.05); 
+}
+
+.pixel-button-fire:active {
+  transform: scale(0.98); 
+  box-shadow: 0 0 10px #ff8c00;
+}
+
 #user-interface {
   display: none;
 }
@@ -306,17 +374,18 @@ body {
 
 
 #controlsOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 12px;
   color: white;
-  font-family: 'Press Start 2P', cursive;
 }
 
 .controls-container {
