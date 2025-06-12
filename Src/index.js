@@ -801,6 +801,27 @@ function animate() {
     // Lógica de movimento
     movementPlayer();
 
+    checkInteractionProximity();
+
+    if (player.interactionAsset && !player.isInteracting) {
+        c.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        c.beginPath();
+        c.roundRect(canvas.width / 2 - 160, canvas.height - 80, 320, 40, 10);
+        c.fill();
+
+        c.fillStyle = '#ffffff';
+        c.fillRect(canvas.width / 2 - 140, canvas.height - 70, 80, 20);
+        c.fillStyle = '#000000';
+        c.font = '10px "Press Start 2P"';
+        c.textAlign = 'center';
+        c.fillText('ESPAÇO', canvas.width / 2 - 100, canvas.height - 55);
+
+        c.fillStyle = '#ffffff';
+        c.font = '14px "Press Start 2P"';
+        c.textAlign = 'left';
+        c.fillText('PARA CONVERSAR', canvas.width / 2 - 50, canvas.height - 55);
+    }
+
 
     if (player.inBattleZone) {
         c.fillStyle = 'rgba(200, 0, 0, 0.7)';
@@ -968,6 +989,6 @@ window.addEventListener('keyup', (e) => {
     const key = e.key.toLowerCase();
 
     if (['w', 'a', 's', 'd'].includes(key)) {
-        movementKeyUp(key); 
+        movementKeyUp(key);
     }
 });
