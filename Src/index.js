@@ -937,17 +937,17 @@ function movementKeyUp(key) {
 }
 
 
-//Eventos
 window.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
 
     if (player.isInteracting) {
-        if (e.key === ' ') {
+        if (key === ' ') {
             dialogueInteraction();
         }
         return;
     }
 
-    switch (e.key) {
+    switch (key) {
         case 'e':
             puzzleInteraction();
             break;
@@ -958,14 +958,16 @@ window.addEventListener('keydown', (e) => {
         case 'a':
         case 's':
         case 'd':
-            movementKeyDown(e.key);
+            movementKeyDown(key);
             break;
     }
 });
 
 
 window.addEventListener('keyup', (e) => {
-    if (['w', 'a', 's', 'd'].includes(e.key)) {
-        movementKeyUp(e.key);
+    const key = e.key.toLowerCase();
+
+    if (['w', 'a', 's', 'd'].includes(key)) {
+        movementKeyUp(key); 
     }
 });
