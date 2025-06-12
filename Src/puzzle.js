@@ -118,7 +118,8 @@ function addNoteToSequence(note) {
   if (userSequence.length < correctSequence.length) {
     userSequence.push(note);
     updateUserSequenceDisplay();
-    document.getElementById('checkSequence').disabled = userSequence.length !== correctSequence.length;
+    //document.getElementById('checkSequence').disabled = userSequence.length !== correctSequence.length;
+    document.getElementById('checkSequence').disabled = false;
   }
 }
 
@@ -158,6 +159,11 @@ function checkUserSequence() {
   if (userSequence.length !== correctSequence.length) {
     const remaining = correctSequence.length - userSequence.length;
     showFeedback(feedback, `Sequência incompleta. Faltam ${remaining} nota(s).`, "#891616");
+    setTimeout(() => {
+      userSequence = [];
+      updateUserSequenceDisplay();
+      document.getElementById('checkSequence').disabled = true;
+    }, 3000);
     return;
   }
 
