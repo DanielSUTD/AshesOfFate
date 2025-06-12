@@ -662,7 +662,7 @@ function checkBoundaryCollision({ offsetX, offsetY }) {
     for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (rectangularCollision({
-            rectangle1: getPlayerHitbox(20, 20),
+            rectangle1: getPlayerHitbox(25, 25),
             rectangle2: {
                 ...boundary,
                 position: {
@@ -759,6 +759,24 @@ function initiateBattle() {
     });
 }
 
+function checkForBattleZoneWarning() {
+
+    player.inBattleZone = false;
+
+    for (let i = 0; i < battleZones.length; i++) {
+        const zone = battleZones[i];
+        if (
+            rectangularCollision({
+                rectangle1: getPlayerHitbox(20, 20),
+                rectangle2: zone,
+            })
+        ) {
+            player.inBattleZone = true;
+            break;
+        }
+    }
+}
+
 function animate() {
     //Puzzle
     if (isModalOpen) return;
@@ -771,6 +789,8 @@ function animate() {
     //Batalha
     if (battle.initiated) return;
 
+    checkForBattleZoneWarning();
+
     // Verificação de colisão com puzzles
     checkForPuzzleCollision({
         puzzles,
@@ -780,6 +800,22 @@ function animate() {
 
     // Lógica de movimento
     movementPlayer();
+
+
+    if (player.inBattleZone) {
+        c.fillStyle = 'rgba(200, 0, 0, 0.7)';
+        c.fillRect(0, 0, canvas.width, 50);
+
+        // Escreve o texto de aviso
+        c.font = '20px "Press Start 2P"';
+        c.fillStyle = 'white';
+        c.textAlign = 'center';
+        c.shadowColor = 'black';
+        c.shadowBlur = 5;
+        c.fillText('CUIDADO! ZONA DE BATALHA!', canvas.width / 2, 32);
+        c.shadowBlur = 0;
+    }
+
 
     if (player.currentPuzzle && player.currentPuzzle.puzzleType === 'chest') {
         c.fillStyle = 'rgba(0, 0, 0, 0.8)';
