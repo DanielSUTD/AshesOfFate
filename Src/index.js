@@ -735,7 +735,7 @@ function shouldInitiateBattle(battleZone, overlappingArea) {
 function initiateBattle() {
     window.cancelAnimationFrame(animationId);
     audio.Map.stop();
-
+    audio.Battle.play();
     battle.initiated = true;
     gsap.to('#overlappingDiv', {
         opacity: 1,

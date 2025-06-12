@@ -24,10 +24,10 @@ function showStory() {
     document.getElementById("storyScreen").style.display = "flex";
 
     const storyText = document.getElementById("storyText");
-
+    audio.Story.play()
     
     typeWriterEffect(story, storyText, 50, () => {
-        document.getElementById("continueButton").style.display = "inline-block"; // 'inline-block' funciona bem com botões
+        document.getElementById("continueButton").style.display = "inline-block";
     });
 }
 
@@ -41,5 +41,7 @@ function showControls() {
 function startGame() {
     document.getElementById("controlsOverlay").style.display = "none";
     document.getElementById("game-canvas").style.display = "block";
+    audio.Story.stop();
+    audio.Map.play();
     animate();
 }

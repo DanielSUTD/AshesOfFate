@@ -15,8 +15,10 @@ function checkAllPuzzlesCompleted() {
 
 // Funções gerais
 function openPuzzle(modalId) {
+
   document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
+  audio.Map.stop();
 
   // Cancela a animação atual
   if (animationId) {
@@ -39,6 +41,11 @@ function closeModal(modalId) {
   if (animationId) {
     cancelAnimationFrame(animationId);
   }
+
+  if (!audio.Map.playing()) {
+    audio.Map.play();
+  }
+  
   animate();
 
   canvas.focus();
@@ -319,6 +326,7 @@ function verifyMoonSequence() {
 function openPuzzle(modalId) {
   document.getElementById(modalId).style.display = 'block';
   isModalOpen = true;
+  audio.Map.stop();
 
   // Cancela a animação atual
   if (animationId) {

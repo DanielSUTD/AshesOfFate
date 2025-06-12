@@ -31,9 +31,8 @@ class Player extends Sprite {
         })
 
         //Som(Batalha finalizada)
-        //audio.battle.stop()
+        audio.Battle.stop()
         //Som(Quando é derrotado)
-        //audio.death.play()
     }
 
     //Animação de Ataque
@@ -53,7 +52,7 @@ class Player extends Sprite {
         switch (attack.name) {
             case 'Quick Slash':
                 //Som do Ataque(Quando é lançado)
-                //audio.initQuickSlash.play()
+                //audio...
                 const attackImage = new Image()
                 attackImage.src = '/assets/BattleImg/ZarienAttackUp.png'
                 const quickSlash = new Sprite({
@@ -84,7 +83,7 @@ class Player extends Sprite {
 
                     onComplete: () => {
                         //Som do Ataque(Quando acerta o inimigo)
-                        //audio.quickSlashHit.play()
+                        audio.Tackle.play()
                         gsap.to(healthBar, {
                             width: recipient.health + '%'
                         })

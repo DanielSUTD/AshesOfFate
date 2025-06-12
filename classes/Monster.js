@@ -26,9 +26,9 @@ class Monster extends Sprite {
             opacity: 0
         })
         //Som(Batalha finalizada)
-        //audio.battle.stop()
+        audio.Battle.stop()
         //Som(Quando é derrotado)
-        //audio.victory.play()
+        audio.Map.play()
     }
 
 
@@ -60,7 +60,7 @@ class Monster extends Sprite {
                         duration: 0.1,
                         onComplete: () => {
                             //Som do Ataque
-                            //audio.tackleHit.play()
+                            audio.tackle.play()
                             gsap.to(healthBar, {
                                 width: recipient.health + '%'
                             })
@@ -87,7 +87,7 @@ class Monster extends Sprite {
                 break;
             case 'Fireball':
                 //Som do Ataque(Quando é lançado)
-                //audio.initFireball.play()
+                audio.InitFireball.play()
                 const fireballImage = new Image()
                 fireballImage.src = '/assets/Enemies/Mage/attack.png'
                 const fireball = new Sprite({
@@ -110,7 +110,7 @@ class Monster extends Sprite {
                     y: recipient.position.y,
                     onComplete: () => {
                         //Som do Ataque(Quando acerta o inimigo)
-                        //audio.fireballHit.play()
+                        audio.Fireball.play()
                         gsap.to(healthBar, {
                             width: recipient.health + '%'
                         })
