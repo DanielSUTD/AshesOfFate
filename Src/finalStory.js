@@ -81,7 +81,7 @@ function showFinalStory() {
   });
 
   continueButton.addEventListener("click", () => {
-    window.location.href = "../index.html";
+    window.location.href = "./index.html";
   });
 
   document.body.appendChild(continueButton); 
