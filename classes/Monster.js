@@ -60,7 +60,7 @@ class Monster extends Sprite {
                         duration: 0.1,
                         onComplete: () => {
                             //Som do Ataque
-                            audio.tackle.play()
+                            audio.Tackle.play()
                             gsap.to(healthBar, {
                                 width: recipient.health + '%'
                             })
