@@ -1,0 +1,23 @@
+28496 - Morse - Fonte com água perto do centro
+28497 - Mapa - Avião Perdido
+28498 - Musica - Igreja 
+28499 - Binário - Roda Gigante
+28500 - Luar - Estátua Central perto do baú
+28501 - Final - Baú no centro
+
+
+
+NPC 001 - 28502
+NPC 003 - 28503
+NPC 008 - 28504
+NPC 009 - 28505
+NPC 010 - 28506
+NPC 022 - 28507
+NPC 032 - 28494
+Drayven 1 Aparição - 28493
+Drayven 2 Aparição - 28508
+Drayven 3 Aparição - 28509
+
+
+28510 - Battle Zone(Mage)
+28511 - Battle Zone(Necromancer)
