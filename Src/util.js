@@ -33,25 +33,6 @@ function checkForCharacterCollision({
     ) {
 
       player.interactionAsset = character
-      
-      c.fillStyle = 'rgba(0, 0, 0, 0.8)';
-      c.beginPath();
-      c.roundRect(canvas.width / 2 - 160, canvas.height - 80, 320, 40, 10);
-      c.fill();
-
-      
-      c.fillStyle = '#ffffff';
-      c.fillRect(canvas.width / 2 - 140, canvas.height - 70, 80, 20);
-      c.fillStyle = '#000000';
-      c.font = '10px "Press Start 2P"';
-      c.textAlign = 'center'; 
-      c.fillText('ESPAÇO', canvas.width / 2 - 100, canvas.height - 55);
-
-      
-      c.fillStyle = '#ffffff';
-      c.font = '14px "Press Start 2P"';
-      c.textAlign = 'left';
-      c.fillText('PARA CONVERSAR', canvas.width / 2 - 50, canvas.height - 55);
       break
     }
   }
@@ -105,5 +86,36 @@ function checkForPuzzleCollision({ puzzles, player, puzzleOffset = { x: 0, y: 0 
     player.nearPuzzle = false;
     player.currentPuzzle = null;
   }
+}
+
+function checkInteractionProximity() {
+    
+    player.interactionAsset = null;
+
+    for (let i = 0; i < characters.length; i++) {
+        const character = characters[i];
+
+        
+        const interactionBox = {
+            position: {
+                x: character.position.x - 16, 
+                y: character.position.y - 16 
+            },
+            width: character.width + 32,  
+            height: character.height + 32 
+        };
+
+        if (
+            rectangularCollision({
+                rectangle1: player,
+                rectangle2: interactionBox 
+            })
+        ) {
+            
+            player.interactionAsset = character;
+          
+            break; 
+        }
+    }
 }
 
