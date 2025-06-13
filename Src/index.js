@@ -187,17 +187,20 @@ collisionsMap.forEach((row, i) => {
 // J = COLUNA, I = LINHA
 battleZonesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
-        if (symbol === 28495)
+        if (symbol === 28510 || symbol === 28511) {
+            const zoneId = `zona_${i}_${j}`;
             battleZones.push(
-                new Boundary({
+                new BattleZone({
                     position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
-                    }
+                        x: j * BattleZone.width + offset.x,
+                        y: i * BattleZone.height + offset.y
+                    },
+                    id: zoneId
                 })
-            )
-    })
-})
+            );
+        }
+    });
+});
 //console.log(battleZones);
 
 //Responsável por criar os objetos(NPCS)
@@ -696,12 +699,18 @@ function idleAnimation() {
     }
 }
 
-//Zona de batalha
 function battleZoneCollisions() {
     for (let i = 0; i < battleZones.length; i++) {
         const battleZone = battleZones[i];
-        const overlappingArea = calculateOverlapArea(battleZone);
 
+
+        if (!battleZone) {
+            console.error(`[VERIFICAÇÃO] O item no índice ${i} do array 'battleZones' é undefined! Pulando.`);
+            continue; 
+        }
+        
+
+        const overlappingArea = calculateOverlapArea(battleZone);
         if (shouldInitiateBattle(battleZone, overlappingArea)) {
             initiateBattle();
             break;
@@ -709,7 +718,7 @@ function battleZoneCollisions() {
     }
 }
 
-//Calcula o mínimo para a colisão
+
 function calculateOverlapArea(battleZone) {
     return (Math.min(
         player.position.x + player.width,
@@ -721,14 +730,29 @@ function calculateOverlapArea(battleZone) {
         ) - Math.max(player.position.y, battleZone.position.y));
 }
 
-//Verifica batalha
+//Zona de Batalha Atual
+let currentBattleZone = null;
+
 function shouldInitiateBattle(battleZone, overlappingArea) {
-    return rectangularCollision({
+    const collision = rectangularCollision({
         rectangle1: getPlayerHitbox(20, 20),
         rectangle2: battleZone
-    }) &&
-        overlappingArea > (player.width * player.height) / 4 &&
-        Math.random() < 0.01;
+    });
+
+    //Debug
+    //if (collision) {
+        //console.log(`Área de sobreposição: ${overlappingArea}. Valor mínimo necessário: ${(player.width * player.height) / 4}`);
+    //}
+
+    
+    if (collision && !battleZone.completed && overlappingArea > (player.width * player.height) / 4) {
+        //Debug
+        //console.log('CONDIÇÃO ATENDIDA! Iniciando batalha...');
+        currentBattleZone = battleZone;
+        return true;
+    }
+
+    return false;
 }
 
 //Batalhas
@@ -760,11 +784,16 @@ function initiateBattle() {
 }
 
 function checkForBattleZoneWarning() {
-
     player.inBattleZone = false;
 
     for (let i = 0; i < battleZones.length; i++) {
         const zone = battleZones[i];
+
+        
+        if (!zone) {
+            continue;
+        }
+
         if (
             rectangularCollision({
                 rectangle1: getPlayerHitbox(20, 20),
