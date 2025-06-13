@@ -114,7 +114,7 @@ function showFinalStory() {
   });
 
   continueButton.addEventListener("click", () => {
-    window.location.href = "./index.html";
+    window.location.href = "/src/index.html";
   });
 
   document.body.appendChild(continueButton);
