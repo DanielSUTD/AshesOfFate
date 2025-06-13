@@ -20,7 +20,7 @@
 1. **Movimentação**: Use as teclas **WASD** para deslocar Zarien pelo mapa.
 2. **Interagir**: Aproxime-se de objetos e NPCs para ativar interações.
 3. **Resolver Puzzles**: Encontre soluções para enigmas que bloqueiam seu progresso.
-4. **Colete os Artefatos**: Percorra as ilhas e descubra os Três Artefatos de Terra Desconhecida.
+4. **Colete os Artefatos**: Percorra as ilhas e descubra os Cinco Artefatos de Terra Desconhecida.
 5. **Descubra a Verdade**: Ao interagir com elementos descobre mais detalhes da história
 
 
@@ -35,6 +35,9 @@ Para jogar **Ashes of Fate** localmente:
    cd ashes-of-fate
    ```
 3. Abra o arquivo `index.html` em seu navegador.
+
+## Link para Jogar
+`https://ashesoffate.netlify.app/`
 
 
 ##
