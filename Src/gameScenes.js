@@ -25,7 +25,7 @@ function showStory() {
 
     const storyText = document.getElementById("storyText");
     audio.Story.play()
-    
+
     typeWriterEffect(story, storyText, 50, () => {
         document.getElementById("continueButton").style.display = "inline-block";
     });
