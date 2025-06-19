@@ -30,11 +30,11 @@ function setAttackButtonsEnabled(enabled) {
 function playerAttack(selectedAttack, recipient) {
     setAttackButtonsEnabled(false);
 
-    
+
     document.querySelector('#attack-style').innerHTML = selectedAttack.type;
     document.querySelector('#attack-style').style.color = selectedAttack.color;
 
-    
+
     zarien.attack({
         attack: selectedAttack,
         recipient: recipient,
@@ -53,32 +53,32 @@ function playerAttack(selectedAttack, recipient) {
 
 function enemyTurn() {
     const randomAttack = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
-    
+
     enemy.attack({
         attack: randomAttack,
         recipient: zarien,
         renderedSprites
     });
 
-    
+
     if (zarien.health <= 0) {
-        battleEnd(false); 
+        battleEnd(false);
     }
 }
 
 
 function battleEnd(playerWon) {
-    
+
     queue.push(() => {
         playerWon ? enemy.faint() : zarien.faint();
     });
 
-    
+
     if (playerWon && currentBattleZone) {
         currentBattleZone.completed = true;
     }
 
-    
+
     queue.push(() => {
         gsap.to('#overlappingDiv', {
             opacity: 1,
@@ -89,7 +89,7 @@ function battleEnd(playerWon) {
                 gsap.to('#overlappingDiv', { opacity: 0 });
                 battle.initiated = false;
 
-                
+
                 if (!playerWon) {
                     audio.Map.play();
                 }
@@ -111,8 +111,8 @@ function initBattle() {
     const monsterKeys = Object.keys(monsters);
     const randomMonsterKey = monsterKeys[Math.floor(Math.random() * monsterKeys.length)];
     const monsterData = monsters[randomMonsterKey];
-    
-    
+
+
     enemy = new Monster({
         ...monsterData,
         position: { ...monsterData.position }
@@ -135,10 +135,18 @@ function initBattle() {
         button.innerHTML = attack.name;
         document.querySelector('.attack-buttons').append(button);
 
-        button.addEventListener('mouseover', () => { /* ... */ });
-        button.addEventListener('mouseout', () => { /* ... */ });
         
+        button.addEventListener('mouseover', () => {
+            document.querySelector('#attack-style').innerHTML = attack.type;
+            document.querySelector('#attack-style').style.color = attack.color;
+        });
+
         
+        button.addEventListener('mouseout', () => {
+            document.querySelector('#attack-style').innerHTML = 'Tipo de Ataque'; 
+            document.querySelector('#attack-style').style.color = 'white'; 
+        });
+
         button.addEventListener('click', () => {
             playerAttack(attack, enemy);
         });
